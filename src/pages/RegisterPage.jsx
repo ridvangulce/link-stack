@@ -1,48 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, where, query } from "firebase/firestore";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const postsCollectionRef = collection(db, "username");
+    const usersCollectionRef = collection(db, "users");
 
-    const createNewUsername = async () => {
-        await addDoc(postsCollectionRef, {
-            username: username,
+    const createNewUsername = async (userId) => {
+        // Check if username already exists in the Firestore database
+        const q = query(usersCollectionRef, where("username", "==", username));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+            return;
+        }
+
+        // Add new document to Firestore with user's UID and username
+        await addDoc(usersCollectionRef, {
+            uid: userId,
+            username: username
         });
-
     };
+
     const register = (e) => {
         e.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential);
-                navigate("/");
-                createNewUsername()
-                // Eklenen kod
-                updateProfile(auth.currentUser, {
+                // Add username and UID to Firestore
+                createNewUsername(userCredential.user.uid);
+                // Update user's display name in Firebase Authentication
+                updateProfile(userCredential.user, {
                     displayName: username,
                 }).then(() => {
                     console.log("Display name added successfully!");
                 }).catch((error) => {
                     console.log(error);
                 });
+
+
+
+                console.log(userCredential);
+                navigate("/");
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
-
-
     return (
-
         <form className='register' onSubmit={register}>
             <h1>Register</h1>
             <input
@@ -65,4 +75,4 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage
+export default RegisterPage;

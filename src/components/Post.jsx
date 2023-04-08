@@ -15,7 +15,7 @@ import {
     writeBatch
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+import Demo from "./Demo";
 import { FaPencilAlt, FaGripLines } from "react-icons/fa";
 import { BsPencil } from "react-icons/bs";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -103,6 +103,7 @@ const Post = () => {
 
     return (
         <div>
+                <Demo/>
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="posts">
                     {(provided) => (

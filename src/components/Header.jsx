@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useParams } from 'react'
 import { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { UserContext } from '../UserContext';
@@ -37,6 +37,7 @@ const Header = () => {
                     <>
                         <Link to='/' className='logo'>{userInfo.username}</Link>
                         <Link to="/login" onClick={logout}>Logout</Link>
+                        <Link to={`/profile/${userInfo.username}`}>Profile</Link>
                     </>
                 ) : (
                     <>
