@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import "./Login.css";
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../UserContext';
-import { auth } from "../firebase";
+import { UserContext } from '../../UserContext';
+import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 
@@ -37,7 +38,7 @@ const LoginPage = () => {
     return (
         <form className='login' onSubmit={login}>
             <h1>Login</h1>
-  
+
 
             <input type="email"
                 placeholder='Email'

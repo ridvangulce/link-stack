@@ -1,14 +1,14 @@
 
 import './App.css';
-import Post from './components/Post.jsx';
-import Header from './components/Header';
+import Post from './components/DraggablePost/Post.jsx';
+import Header from './components/Header/Header';
 import { Routes, Route } from "react-router-dom";
-import Layout from './components/Layout';
-import IndexPage from './pages/IndexPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import Layout from './components/Layout/Layout';
+import IndexPage from './pages/IndexPage/IndexPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 import { UserContextProvider } from './UserContext';
-import ProfilePage from './pages/ProfilePage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 function App() {
   return (

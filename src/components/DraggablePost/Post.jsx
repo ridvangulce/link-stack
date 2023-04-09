@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import LoginPage from "../pages/LoginPage";
-import { db } from "../firebase";
+import LoginPage from "../../pages/LoginPage/LoginPage";
+import PostList from "../PostList/PostList";
+import "./Post.css";
+import { db } from "../../firebase";
 import {
     collection,
     getDocs,
@@ -12,11 +14,11 @@ import {
     onSnapshot,
     updateDoc,
     orderBy,
-    writeBatch
+    writeBatch,
+    deleteDoc // Firestore'dan veri silmek için gerekli fonksiyon
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Demo from "./Demo";
-import { FaPencilAlt, FaGripLines } from "react-icons/fa";
+import { FaGripLines } from "react-icons/fa";
 import { BsPencil } from "react-icons/bs";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -40,9 +42,16 @@ const Post = () => {
                     photoURL: user.photoURL
                 });
 
-                const postsQuery = query(collection(db, "posts"), where("uid", "==", user.uid), orderBy("order"));
+                const postsQuery = query(
+                    collection(db, "posts"),
+                    where("uid", "==", user.uid),
+                    orderBy("order")
+                );
                 const unsubscribePosts = onSnapshot(postsQuery, (snapshot) => {
-                    const newPosts = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+                    const newPosts = snapshot.docs.map((doc) => ({
+                        ...doc.data(),
+                        id: doc.id
+                    }));
                     setPosts(newPosts);
                 });
             } else {
@@ -77,8 +86,8 @@ const Post = () => {
         setEditingId(null);
     };
 
-    const handleBlur = (post) => {
-        handleSubmit(post);
+    const handleDelete = async (id) => {
+        await deleteDoc(doc(db, "posts", id));
     };
 
     const handleDragEnd = async (result) => {
@@ -97,12 +106,44 @@ const Post = () => {
         });
 
         await batch.commit();
+
+        // PostList componentinin yeniden render edilmesi için setPosts fonksiyonunu çağıralım
+        setPosts(items);
+    };
+
+
+    const handleBlur = (post) => {
+        handleSubmit(post);
+    };
+
+    const handleClickOutside = (event) => {
+        if (inputRef.current && !inputRef.current.contains(event.target)) {
+            handleSubmit(posts.find((post) => post.id === editingId));
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleToggle = async (post) => {
+        const updatedPost = {
+            ...post,
+            isActive: !post.isActive
+        };
+
+        await updateDoc(doc(db, "posts", post.id), updatedPost);
     };
 
     if (!user || !user.uid) return <LoginPage />;
 
     return (
         <div>
+            <PostList handleDragEnd={handleDragEnd} handleToggle={handleToggle} />
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="posts">
                     {(provided) => (
@@ -123,6 +164,7 @@ const Post = () => {
                                                         ref={inputRef}
                                                         defaultValue={content}
                                                         onChange={(e) => setContent(e.target.value)}
+                                                        autoFocus
                                                     />
                                                 </div>
                                             ) : (
@@ -132,6 +174,16 @@ const Post = () => {
                                                     <BsPencil className="edit-pen" />
                                                 </div>
                                             )}
+                                            {/* Firestore'dan veri silmek için buton */}
+                                            <button onClick={() => handleDelete(post.id)}>Sil</button>
+                                            <div
+                                                className={
+                                                    post.isActive ? "toggle-button active" : "toggle-button"
+                                                }
+                                                onClick={() => handleToggle(post)} // Ekleme yapıldı
+                                            >
+                                                <div className="toggle-knob"></div>
+                                            </div>
                                         </div>
                                     )}
                                 </Draggable>

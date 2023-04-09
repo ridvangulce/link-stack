@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { auth } from "../firebase";
+import "./Register.css";
+import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { collection, addDoc, getDocs, where, query } from "firebase/firestore";
 
 const RegisterPage = () => {

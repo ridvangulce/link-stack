@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db, auth } from "../../firebase";
 import {
     collection,
     getDocs,
-    where,
     query,
     orderBy,
+    where
 } from "firebase/firestore";
 
-const PostList = ({ username }) => {
+const PostList = ({handleDragEnd, handleToggle}) => {
     const [posts, setPosts] = useState([]);
     const [userNotFound, setUserNotFound] = useState(false);
     const [postNotFound, setPostNotFound] = useState(false);
@@ -16,37 +16,26 @@ const PostList = ({ username }) => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                // Kullanıcı adına karşılık gelen uid'yi bulma
-                const querySnapshot = await getDocs(
-                    collection(db, "users"),
-                    where("username", "==", username)
-                );
-
-                if (querySnapshot.empty) {
-                    setUserNotFound(true);
+                const user = auth.currentUser;
+                if (!user) {
                     return;
                 }
-                const userId = querySnapshot.docs[0].id;
-                console.log(userId);
-
-                if (!userId) {
-                    setUserNotFound(true);
-                    return;
-                }
+                const userId = user.uid;
 
                 // Kullanıcının postlarını çekme
                 const snapshot = await getDocs(
                     query(
                         collection(db, "posts"),
                         where("uid", "==", userId),
-
+                        orderBy("order")
                     )
                 );
                 if (snapshot.empty) {
-                    console.log(`No posts found for user: ${username}`);
+                    console.log(`No posts found for user: ${user.email}`);
                     setPostNotFound(true);
                 } else {
-                    const posts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+                    const filteredPosts = snapshot.docs.filter((doc) => doc.data().isActive === true);
+                    const posts = filteredPosts.map((doc) => ({ id: doc.id, ...doc.data() }));
                     setPosts(posts);
                 }
             } catch (error) {
@@ -55,15 +44,14 @@ const PostList = ({ username }) => {
         };
 
         fetchPosts();
-    }, [username]);
+    }, [handleDragEnd, handleToggle]);
 
     return (
         <div>
-            {userNotFound && <p>User not found</p>}
             {postNotFound && <p>Post not found</p>}
-            {!userNotFound && !postNotFound && (
+            {!postNotFound && (
                 <>
-                    <h2>Posts for {username}</h2>
+                    <h2>Your Posts</h2>
                     {posts.map((post) => (
                         <div key={post.id}>
                             <p>{post.content}</p>
