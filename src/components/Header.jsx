@@ -1,4 +1,4 @@
-import React, { useEffect,useParams } from 'react'
+import React, { useEffect, useParams } from 'react'
 import { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { UserContext } from '../UserContext';
@@ -18,7 +18,7 @@ const Header = () => {
             }
         });
         return unsubscribe;
-    }, [setUserInfo]);
+    }, [userInfo]);
 
     function logout() {
         signOut(auth).then(() => {
@@ -30,6 +30,10 @@ const Header = () => {
         setUserInfo(null)
     }
 
+    function handleProfileClick() {
+        window.location.href = `/profile/${userInfo.username}`; // programatik olarak yönlendirme yapmak için
+    }
+
     return (
         <header>
             <nav>
@@ -37,7 +41,7 @@ const Header = () => {
                     <>
                         <Link to='/' className='logo'>{userInfo.username}</Link>
                         <Link to="/login" onClick={logout}>Logout</Link>
-                        <Link to={`/profile/${userInfo.username}`}>Profile</Link>
+                        <Link onClick={handleProfileClick}>Profile</Link>
                     </>
                 ) : (
                     <>

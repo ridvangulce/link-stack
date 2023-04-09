@@ -1,48 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { collection, getDocs, where } from "firebase/firestore";
-import { useParams } from 'react-router-dom';
+import {
+    collection,
+    getDocs,
+    where,
+    query,
+    orderBy,
+} from "firebase/firestore";
+import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
+    const [userNotFound, setUserNotFound] = useState(false);
+    const [userId, setUserId] = useState("");
     const [posts, setPosts] = useState([]);
-    const { username } = useParams();
+
+    const { username } = useParams(); // useParams hook'undan "username" değerini al
 
     useEffect(() => {
-        const fetchPosts = async () => {
+        const fetchUserInfo = async () => {
             try {
                 // Kullanıcı adına karşılık gelen uid'yi bulma
-                const querySnapshot = await getDocs(collection(db, "users"), where("username", "==", username));
-                let userId;
-                querySnapshot.forEach((doc) => {
-                    userId = doc.id;
-                });
+                const q = query(
+                    collection(db, "users"),
+                    where("username", "==", username)
+                );
+                const querySnapshot = await getDocs(q);
 
-                // Kullanıcının postlarını çekme
-                const snapshot = await getDocs(collection(db, "posts"), where("uid", "==", userId));
-                let posts = [];
-                snapshot.forEach((doc) => {
-                    posts.push(doc.data());
-                });
-                setPosts(posts);
+                if (querySnapshot.empty) {
+                    setUserNotFound(true);
+                    return;
+                }
+
+                const userDoc = querySnapshot.docs[0];
+                const { uid } = userDoc.data();
+
+                console.log(`UID for ${username}: ${uid}`);
+                setUserId(uid);
+
             } catch (error) {
-                console.log("Error getting documents: ", error);
+                console.log("Error getting user information: ", error);
             }
         };
 
-        fetchPosts();
+        fetchUserInfo();
     }, [username]);
+
+    useEffect(() => {
+        const fetchUserPosts = async () => {
+            if (!userId) return; // userId henüz ayarlanmadıysa devam etme
+
+            // Belirtilen kullanıcının postlarını alma
+            const postRef = collection(db, "posts");
+            const postQuery = query(postRef, where("uid", "==", userId), orderBy("order"));
+            const postSnapshot = await getDocs(postQuery);
+            const posts = postSnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setPosts(posts);
+        };
+
+        fetchUserPosts();
+    }, [userId]);
 
     return (
         <div>
-            <h1>Post List for {username}</h1>
-            <ul>
-                {posts.map((post) => (
-                    <li key={post.uid}>
-                        <p>{post.title}</p>
-                        <p>{post.content}</p>
-                    </li>
-                ))}
-            </ul>
+            {userNotFound ? (
+                <p>User not found</p>
+            ) : (
+                <>
+                    <h1>Posts for {username}</h1>
+                    {posts.map((post) => (
+                        <div key={post.id} dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                    ))}
+                </>
+            )}
         </div>
     );
 };

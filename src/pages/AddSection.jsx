@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CreatePost from '../pages/CreatePost';
 
-const Test = () => {
+const AddSection = () => {
   const [showPost, setShowPost] = useState(false);
 
   return (
@@ -20,4 +20,4 @@ const Test = () => {
   );
 }
 
-export default Test;
+export default AddSection;

@@ -103,7 +103,6 @@ const Post = () => {
 
     return (
         <div>
-                <Demo/>
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="posts">
                     {(provided) => (
