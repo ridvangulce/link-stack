@@ -15,7 +15,8 @@ const ProfilePage = () => {
     const [posts, setPosts] = useState([]);
 
     const { username } = useParams(); // useParams hook'undan "username" değerini al
-
+    const formattedUsername =
+        username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
@@ -63,13 +64,14 @@ const ProfilePage = () => {
         fetchUserPosts();
     }, [userId]);
 
+
     return (
         <div>
             {userNotFound ? (
                 <p>User not found</p>
             ) : (
                 <>
-                    <h1>Posts for {username}</h1>
+                    <h1>Posts for {formattedUsername}</h1>
                     {posts.map((post) => (
                         <div key={post.id} dangerouslySetInnerHTML={{ __html: post.content }}></div>
                     ))}

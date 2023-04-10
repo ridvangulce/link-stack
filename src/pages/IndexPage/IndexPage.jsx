@@ -4,12 +4,16 @@ import CreatePost from '../../components/CreatePost/CreatePost'
 import AddSection from '../../components/AddSectionPage/AddSection'
 import ProfilePage from '../ProfilePage/ProfilePage'
 import AddPost from '../../components/AddPost/AddPost'
+import PostList from '../../components/PostList/PostList'
+import "./style.css"
 const IndexPage = () => {
 
     return (
         <>
-            <AddPost />
-            <Post />
+            <div className='index-page'>
+                <AddPost />
+                <Post />
+            </div>
         </>
     )
 }

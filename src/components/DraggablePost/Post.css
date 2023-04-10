@@ -1,78 +1,74 @@
+.page-container {
+  display: flex;
+  flex-direction: row;
+}
 
-.post{
-    display: grid;
-    margin: 20px 20px 0 0;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    align-items: flex-end;
-    border:1px solid red;
-    padding-left: 20px;
-  }
-  div.post div.texts h2{
-    margin:0;
-    font-size: 1.8rem;
-  }
+.post-list-container {
+  width: 30%;
+}
 
-  div.post div.texts {
-    padding: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .post-text-area{
-    width: 100%;
-    height: 50%;
-  }
-  div.post p.info{
-    margin:6px 0;
-    color:#aaa;
-    font-size: .7rem;
-    font-weight: bold;
-    display: flex;
-    gap:5px;
-  }
-  div.post p.info a.author{
-    color:#333;
-  
-  }
-  div.post p.summary{
-    overflow: hidden;
-    height: 100px;
-    margin:10px 0;
-    line-height: 1.3rem;
-  }
+.posts-container {
+  width: 70%;
+  margin: 10vh 0vh 10vh 1vh;
+  padding: 20px;
+}
+.posts-container .post{
+  margin-top: 20px;
+  border:1px solid;
+  border-radius: 4rem;
+  text-align: center;
+  padding:2em;
+  background-color: white;
+}
 
-  
-  .edit-pen {
-    color: #212529;
-    background-color: transparent;
-  }
-  .toggle-button {
-    width: 50px;
-    height: 25px;
-    background-color: #ccc;
-    position: relative;
-    border-radius: 50px;
-    cursor: pointer;
-  }
-  
+.toggle-button {
+  float: right;
+  bottom:30px;
+  width: 30px; 
+  height: 15px; 
+  background-color: #ccc;
+  position: relative;
+  border-radius: 50px;
+  cursor: pointer;
+}
   .toggle-button.active {
     background-color: #2196f3;
   }
+
   
   .toggle-knob {
-    width: 21px;
-    height: 21px;
+    width: 12px;
+    height: 12px;
     background-color: white;
     position: absolute;
-    top: 2px;
-    left: 2px;
+    top: 1.3px;
+    left: 1.4px;
     border-radius: 50%;
     transition: all 0.3s ease-in-out;
   }
   
   .toggle-button.active .toggle-knob {
-    transform: translateX(25px);
+    transform: translateX(14px);
   }
   
-
+  .drag-icon{
+    position: relative;
+    float: left;
+    width:fit-content;
+  }
+  .edit-pen-icon{
+    margin-left: 0.6em;
+  }
+  .delete-btn{
+    position: relative;
+    border: none;
+    float: right;
+    background-color: transparent;
+    margin-right: -25px;
+  }
+  .delete-btn-icon{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+ 

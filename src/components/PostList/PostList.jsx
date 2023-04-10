@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./PostList.css";
 import { db, auth } from "../../firebase";
 import {
     collection,
@@ -47,7 +48,7 @@ const PostList = ({handleDragEnd, handleToggle}) => {
     }, [handleDragEnd, handleToggle]);
 
     return (
-        <div>
+        <div className="post-list">
             {postNotFound && <p>Post not found</p>}
             {!postNotFound && (
                 <>
