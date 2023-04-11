@@ -1,106 +1,85 @@
 .page-container {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  margin-left:5vh;
+  border-right: 1px solid gray;
 }
-
-.post-list-container {
-  width: 30%;
-}
-
-.posts-container {
-  width: 70%;
-  margin: 10vh 0vh 10vh 1vh;
-  padding: 20px;
-}
-.posts-container .post{
-  margin-top: 20px;
-  width: 70%;
-  height: 13em;
-  border:1px solid;
-  border-radius: 4rem;
-  text-align: center;
-  padding:2em;
+.texts,.post-text-container{
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
   background-color: white;
+  border-radius: 2em;
+  gap: 10px;
+  margin: 10px;
 }
 
+.content{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.right-side-container{
+  grid-area: 3/3/2/3;;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-content: end;
+  margin: 0 20px 0 0;
+  gap:0;
+}
 .toggle-button {
-  float: right;
-  bottom:30px;
   width: 30px; 
   height: 15px; 
   background-color: #ccc;
   position: relative;
   border-radius: 50px;
   cursor: pointer;
+  margin:0px 0px 10px 0px ;
 }
-  .toggle-button.active {
-    background-color: #2196f3;
-  }
+.toggle-button.active {
+      background-color: #2196f3;
+}
+.toggle-knob {
+      width: 12px;
+      height: 12px;
+      background-color: white;
+      position: absolute;
+      top: 1.3px;
+      left: 1.4px;
+      border-radius: 50%;
+      transition: all 0.3s ease-in-out;
+}
+    
+.toggle-button.active .toggle-knob {
+  transform: translateX(14px);
+}
+.delete-btn{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.delete-btn-icon{
+  cursor: pointer;
+  width: 30px;
+  height: 20px;
+  float: right;
+  color:red;
+}
+.delete-btn-icon:hover{
+  background-color: rgb(194, 194, 210);
+  transition: 0.4s;
+  border:1px solid  rgb(194, 194, 210);
+  border-radius: 2em;
+  color:rgb(255, 68, 0);
+}
 
-  
-  .toggle-knob {
-    width: 12px;
-    height: 12px;
-    background-color: white;
-    position: absolute;
-    top: 1.3px;
-    left: 1.4px;
-    border-radius: 50%;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .toggle-button.active .toggle-knob {
-    transform: translateX(14px);
-  }
-  
-  .texts {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .drag-icon {
-    margin-left: 0;
-    float: left;
-  }
-  
-  .texts-content {
-    flex-grow: 1;
-    text-align: center;
-  }
-  
-  .edit-pen-icon{
-    margin-top: -5px;
-    margin-left: 10px;
-  }
-  .edit-pen-icon:hover{
-    cursor: pointer;
-    opacity: 0.5;
-    color:red;
-  }
-  .right-side-container{
-    display: grid;
-    margin-top: 2em;
-    padding:10px
-  }
-  .delete-btn{
-    border:none;
-    background-color: transparent;
-    color:red
-  }
-  .delete-btn:hover{
-    background-color: #ccc;
-    opacity: 0.8;
-    transition: 0.4s;
-    border-radius: 1.2em;
-  }
-  .delete-btn-icon{
-    width: 20px;
-    height: 20px;
-  }
-  .texts-content:hover{
-    cursor: pointer;
-  }
+.content-container{
+grid-area: 2/2/2/2;
+}
+.drag-icon{
+  grid-area: 2/1/2/2;
  
+}

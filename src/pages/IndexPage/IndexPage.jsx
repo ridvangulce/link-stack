@@ -11,7 +11,6 @@ const IndexPage = () => {
     return (
         <>
             <div className='index-page'>
-                <AddPost />
                 <Post />
             </div>
         </>

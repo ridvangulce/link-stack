@@ -74,7 +74,9 @@ const Header = () => {
                             <span>{userInfo && userInfo.username ? userInfo.username.charAt(0).toUpperCase() : null} </span>
                         </div>
                         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} >
+                            
                             <h3>{userInfo.username}</h3>
+
                             <Link className='nav-profile' onClick={handleProfileClick}>
                                 <div className='dropdownItem'>
                                     <p> Profile </p>

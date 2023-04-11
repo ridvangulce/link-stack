@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./PostList.css";
+import { UserContext } from "../../UserContext";
 import { db, auth } from "../../firebase";
 import {
     collection,
@@ -9,10 +10,11 @@ import {
     where
 } from "firebase/firestore";
 
-const PostList = ({handleDragEnd, handleToggle}) => {
+const PostList = ({ handleDragEnd, handleToggle}) => {
     const [posts, setPosts] = useState([]);
     const [userNotFound, setUserNotFound] = useState(false);
     const [postNotFound, setPostNotFound] = useState(false);
+    const { userInfo = {}, setUserInfo } = useContext(UserContext)
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -22,7 +24,6 @@ const PostList = ({handleDragEnd, handleToggle}) => {
                     return;
                 }
                 const userId = user.uid;
-
                 // Kullanıcının postlarını çekme
                 const snapshot = await getDocs(
                     query(
@@ -48,19 +49,24 @@ const PostList = ({handleDragEnd, handleToggle}) => {
     }, [handleDragEnd, handleToggle]);
 
     return (
-        <div className="post-list">
-            {postNotFound && <p>Post not found</p>}
-            {!postNotFound && (
-                <>
-                    <h2>Your Posts</h2>
-                    {posts.map((post) => (
-                        <div key={post.id}>
-                            <p>{post.content}</p>
+        <section>
+            <div className="post-list">
+                {postNotFound && <p>Post not found</p>}
+                {!postNotFound && (
+                    <>
+                        <div className='menu-trigger'>
+                            <span>{userInfo && userInfo.username ? userInfo.username.charAt(0).toUpperCase() : null} </span>
                         </div>
-                    ))}
-                </>
-            )}
-        </div>
+                        <h2>@{userInfo.username}</h2>
+                        {posts.map((post) => (
+                            <div key={post.id}>
+                                <p>{post.content}</p>
+                            </div>
+                        ))}
+                    </>
+                )}
+            </div>
+        </section>
     );
 };
 

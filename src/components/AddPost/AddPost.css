@@ -1,12 +1,10 @@
 .btn{
     width: 50%;
     height: 3rem;
-    display: block;
     color:#333;
     background-color: #8129D9;
     border: 0;
     color:#fff;
-    padding: 5px 0;
     border-radius: 30px;
   }
   .btn:hover{

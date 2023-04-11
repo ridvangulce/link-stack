@@ -3,17 +3,27 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
+:root {
+
+  --secondary-bg: #fff;
+  --primary-text-color: #555;
+  --secondary-text-color: #cecece;
+  --border-radius: 8px;
+  --speed: 500ms;
+}
+
+body {
   color: #333;
   border: 1px solid; 
   background-color: #F3F3F1;
-  
-}
-img{
-  max-width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F3F3F1;
 
 }
-
 
 header{
   display: flex;

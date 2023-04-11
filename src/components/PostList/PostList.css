@@ -1,6 +1,18 @@
 .post-list{
-    display: grid;
-    float:right;
-    border: 1px solid;
-    margin: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.post-list h2{
+    margin :5px 5px 15px 30px;
+    font-weight:300;
+    font-size: medium;
+}
+.post-list .menu-trigger{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2em;
 }

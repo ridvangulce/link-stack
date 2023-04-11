@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import PostList from "../PostList/PostList";
+import AddPost from "../AddPost/AddPost";
 import "./Post.css";
 import { db } from "../../firebase";
 import {
@@ -146,6 +147,8 @@ const Post = () => {
 
             <div className="posts-container">
                 <DragDropContext onDragEnd={handleDragEnd}>
+                    <AddPost />
+
                     <Droppable droppableId="posts">
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -156,53 +159,64 @@ const Post = () => {
                                                 className="post"
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                            >
-                                                {editingId === post.id ? (
-                                                    <div onBlur={() => handleBlur(post)}>
-                                                        <input
-                                                            className="post-text-area"
-                                                            ref={inputRef}
-                                                            defaultValue={content}
-                                                            onChange={(e) => setContent(e.target.value)}
-                                                            autoFocus
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <div className="texts" >
-                                                        <FaGripLines className="drag-icon" />
-                                                        <div className="content-container">
-                                                            <p className="texts-content"
-                                                                onClick={() => handleEditClick(post)}
-                                                                dangerouslySetInnerHTML={{ __html: post.content }}
-                                                            />
+                                                {...provided.dragHandleProps} >
+                                                {editingId === post.id
 
-                                                            <BsPencil className="edit-pen-icon" onClick={() => handleEditClick(post)} />
-                                                        </div>
-
-                                                        <div className="right-side-container">
-                                                            <div className={post.isActive ? "toggle-button active" : "toggle-button"} onClick={() => handleToggle(post)}   >
-                                                                <div className="toggle-knob"></div>
+                                                    ? (
+                                                        <div className="post-text-container" onBlur={() => handleBlur(post)} >
+                                                            <FaGripLines className="drag-icon content" />
+                                                            <div className="content-container content">
+                                                                <input
+                                                                    className="post-text-area content"
+                                                                    ref={inputRef}
+                                                                    defaultValue={content}
+                                                                    onChange={(e) => setContent(e.target.value)}
+                                                                    autoFocus
+                                                                />
                                                             </div>
-                                                            <button className="delete-btn" onClick={() => handleDelete(post.id)}>
-                                                                <BsFillTrash3Fill className="delete-btn-icon" onClick={() => handleDelete(post.id)} />
-                                                            </button>
+                                                            <div className="right-side-container content">
+                                                                <div className={post.isActive ? "toggle-button active" : "toggle-button"} onClick={() => handleToggle(post)}   >
+                                                                    <div className="toggle-knob"></div>
+                                                                </div>
+                                                                <button className="delete-btn" onClick={() => handleDelete(post.id)}>
+                                                                    <BsFillTrash3Fill className="delete-btn-icon" onClick={() => handleDelete(post.id)} />
+                                                                </button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )}
+                                                    ) : (
+                                                        <div className="texts" >
+                                                            <FaGripLines className="drag-icon content" />
+                                                            <div className="content-container content">
+                                                                <p className="texts-content" onClick={() => handleEditClick(post)}>{post.content}</p>
+
+                                                                <BsPencil className="edit-pen-icon" onClick={() => handleEditClick(post)} />
+                                                            </div>
+
+                                                            <div className="right-side-container content">
+                                                                <div className={post.isActive ? "toggle-button active" : "toggle-button"} onClick={() => handleToggle(post)}   >
+                                                                    <div className="toggle-knob"></div>
+                                                                </div>
+                                                                <button className="delete-btn" onClick={() => handleDelete(post.id)}>
+                                                                    <BsFillTrash3Fill className="delete-btn-icon" onClick={() => handleDelete(post.id)} />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                    )}
+
                                             </div>
                                         )}
                                     </Draggable>
                                 ))}
                                 {provided.placeholder}
+
                             </div>
                         )}
                     </Droppable>
                 </DragDropContext>
             </div>
-            <div className="post-list-container">
-                <PostList handleDragEnd={handleDragEnd} handleToggle={handleToggle} />
-            </div>
+
+            <PostList handleDragEnd={handleDragEnd} handleToggle={handleToggle} />
 
         </div>
 
