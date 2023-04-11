@@ -14,6 +14,8 @@
 }
 .posts-container .post{
   margin-top: 20px;
+  width: 70%;
+  height: 13em;
   border:1px solid;
   border-radius: 4rem;
   text-align: center;
@@ -51,24 +53,54 @@
     transform: translateX(14px);
   }
   
-  .drag-icon{
-    position: relative;
-    float: left;
-    width:fit-content;
+  .texts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
   }
+  
+  .drag-icon {
+    margin-left: 0;
+    float: left;
+  }
+  
+  .texts-content {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
   .edit-pen-icon{
-    margin-left: 0.6em;
+    margin-top: -5px;
+    margin-left: 10px;
+  }
+  .edit-pen-icon:hover{
+    cursor: pointer;
+    opacity: 0.5;
+    color:red;
+  }
+  .right-side-container{
+    display: grid;
+    margin-top: 2em;
+    padding:10px
   }
   .delete-btn{
-    position: relative;
-    border: none;
-    float: right;
+    border:none;
     background-color: transparent;
-    margin-right: -25px;
+    color:red
+  }
+  .delete-btn:hover{
+    background-color: #ccc;
+    opacity: 0.8;
+    transition: 0.4s;
+    border-radius: 1.2em;
   }
   .delete-btn-icon{
     width: 20px;
     height: 20px;
+  }
+  .texts-content:hover{
     cursor: pointer;
   }
  

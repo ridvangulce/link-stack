@@ -169,21 +169,27 @@ const Post = () => {
                                                         />
                                                     </div>
                                                 ) : (
-                                                    <div className="texts" onClick={() => handleEditClick(post)}>
+                                                    <div className="texts" >
                                                         <FaGripLines className="drag-icon" />
-                                                        <p dangerouslySetInnerHTML={{ __html: post.content }} />
-                                                        <BsPencil className="edit-pen-icon" />
+                                                        <div className="content-container">
+                                                            <p className="texts-content"
+                                                                onClick={() => handleEditClick(post)}
+                                                                dangerouslySetInnerHTML={{ __html: post.content }}
+                                                            />
+
+                                                            <BsPencil className="edit-pen-icon" onClick={() => handleEditClick(post)} />
+                                                        </div>
+
+                                                        <div className="right-side-container">
+                                                            <div className={post.isActive ? "toggle-button active" : "toggle-button"} onClick={() => handleToggle(post)}   >
+                                                                <div className="toggle-knob"></div>
+                                                            </div>
+                                                            <button className="delete-btn" onClick={() => handleDelete(post.id)}>
+                                                                <BsFillTrash3Fill className="delete-btn-icon" onClick={() => handleDelete(post.id)} />
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 )}
-
-                                                <div className="right-side">
-                                                    <div className={post.isActive ? "toggle-button active" : "toggle-button"} onClick={() => handleToggle(post)}   >
-                                                        <div className="toggle-knob"></div>
-                                                    </div>
-                                                    <button className="delete-btn" onClick={() => handleDelete(post.id)}>
-                                                        <BsFillTrash3Fill className="delete-btn-icon" onClick={() => handleDelete(post.id)} />
-                                                    </button>
-                                                </div>
                                             </div>
                                         )}
                                     </Draggable>
