@@ -36,20 +36,23 @@ const LoginPage = () => {
     }, []);
 
     return (
-        <form className='login' onSubmit={login}>
+        <form className='form' onSubmit={login}>
             <h1>Login</h1>
 
-
-            <input type="email"
-                placeholder='Email'
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-            />
-            <input type="password"
-                placeholder='Password'
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-            />
+            <div className='form-container'>
+                <input type="email"
+                    className='email'
+                    placeholder='Email'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                />
+                <input type="password"
+                    className='password'
+                    placeholder='Password'
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                />
+            </div>
             <button>Login</button>
         </form>
     )

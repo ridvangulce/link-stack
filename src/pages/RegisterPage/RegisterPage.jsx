@@ -54,23 +54,26 @@ const RegisterPage = () => {
     };
 
     return (
-        <form className='register' onSubmit={register}>
+        <form className='form' onSubmit={register}>
             <h1>Register</h1>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)} />
-            <input type="email"
-                placeholder='Email'
-                value={email}
-                onChange={event => setEmail(event.target.value)}
-            />
-            <input type="password"
-                placeholder='Password'
-                value={password}
-                onChange={event => setPassword(event.target.value)}
-            />
+            <div className='form-container'>
+
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)} />
+                <input type="email"
+                    placeholder='Email'
+                    value={email}
+                    onChange={event => setEmail(event.target.value)}
+                />
+                <input type="password"
+                    placeholder='Password'
+                    value={password}
+                    onChange={event => setPassword(event.target.value)}
+                />
+            </div>
             <button>Register</button>
         </form>
     )

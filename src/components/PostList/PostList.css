@@ -1,3 +1,7 @@
+section{
+    border-left: 0.1px solid grey;
+
+}
 .post-list{
     display: flex;
     flex-direction: column;

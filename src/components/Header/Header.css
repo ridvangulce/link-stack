@@ -1,11 +1,59 @@
 
-  header nav{
+   header a{
+    text-decoration: none;
+    color:inherit;
+  }
+
+header nav{
+  display: grid;
+  width: 100%;
+  gap:20px
+}
+  header .menu-container,header .nav-right{
+    display: flex;
+    gap:15px;
     justify-content: space-between;
-    width: 100%;
     background-color:antiquewhite;
     border: 1px solid rgb(198, 185, 168);
     border-radius: 4rem;
     margin:0px 20px 0px 20px;
+  }
+  header .nav-right{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    gap:10px;
+    padding:10px;
+    text-align: center;
+    justify-content: center;
+  }
+  header .nav-right .logo{
+    display: flex;
+    justify-content: flex;
+    align-items: center;
+  }
+  header .nav-right .form-route{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content:end;
+    gap:2rem;
+  }
+  header .nav-right .form-route a{
+    background-color: rgb(163, 191, 188);
+    color:whitesmoke;
+    border:1px solid rgb(158, 151, 151);
+    border-radius: 1em;
+    padding:10px;
+    color: black;
+    opacity: 0.7;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 1px 2px black;
+    transition: 0.4s;
+  }
+  header .nav-right .form-route a:hover{
+    background-color: #F3F3F1;
+    transition: 0.4s;
   }
   .nav-main-menu{
     display: flex;
@@ -38,6 +86,18 @@
     justify-content: center;
     font-weight: bold;
     font-size: 30px;
+  }
+  .menu-trigger .logo{
+    color:black;
+    background-color: #F9EAD7;
+    border: 0.1px solid grey;
+    transition: 0.4s;
+  }
+  .menu-trigger .logo:hover{
+    color:yellow;
+    background-color:  rgb(72, 60, 60);
+    border: 0.1px solid grey;
+    transition: 0.4s;
   }
 
   
@@ -116,4 +176,4 @@
     transition: var(--speed);
   }
   
-
+ 

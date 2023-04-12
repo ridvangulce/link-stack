@@ -5,7 +5,8 @@ import { UserContext } from '../../UserContext';
 import { signOut } from "firebase/auth"
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
-import "./index.css"
+import { SiLinktree } from 'react-icons/si'
+import "./Header.css"
 
 const Header = () => {
     const { userInfo = {}, setUserInfo } = useContext(UserContext)
@@ -66,15 +67,20 @@ const Header = () => {
     return (
         <header>
             <nav>
-                <Link className='nav-main-menu' to='/'>Main Menu</Link>
 
                 {userInfo ? (
                     <div className='menu-container' ref={menuRef}>
+                        <Link to='/'>
+                            <div className='menu-trigger'>
+                                <span className="logo"><SiLinktree />
+                                </span>
+                            </div>
+                        </Link>
                         <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
                             <span>{userInfo && userInfo.username ? userInfo.username.charAt(0).toUpperCase() : null} </span>
                         </div>
                         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} >
-                            
+
                             <h3>{userInfo.username}</h3>
 
                             <Link className='nav-profile' onClick={handleProfileClick}>
@@ -92,9 +98,16 @@ const Header = () => {
                     </div>
                 ) : (
                     <div className='nav-right'>
-                        <Link to='/' className='logo'>Linktree</Link>
-                        <Link to='/login'>Login</Link>
-                        <Link to='/register'>Register</Link>
+                        <Link  to='/'>
+                            <div className='menu-trigger'>
+                                <span className="logo"><SiLinktree />
+                                </span>
+                            </div>
+                        </Link>
+                        <div className="form-route">
+                            <Link to='/login'>Login</Link>
+                            <Link to='/register'>Register</Link>
+                        </div>
                     </div>
                 )}
             </nav>
