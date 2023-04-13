@@ -143,7 +143,7 @@ const Post = () => {
     if (!user || !user.uid) return <LoginPage />;
 
     return (
-        <div className="page-container">
+        <div className="post-page-container">
 
             <div className="posts-container">
                 <DragDropContext onDragEnd={handleDragEnd}>

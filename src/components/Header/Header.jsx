@@ -5,7 +5,8 @@ import { UserContext } from '../../UserContext';
 import { signOut } from "firebase/auth"
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
-import { SiLinktree } from 'react-icons/si'
+import { SiLinktree } from 'react-icons/si';
+import { BiImages } from 'react-icons/bi';
 import "./Header.css"
 
 const Header = () => {
@@ -70,12 +71,21 @@ const Header = () => {
 
                 {userInfo ? (
                     <div className='menu-container' ref={menuRef}>
-                        <Link to='/'>
-                            <div className='menu-trigger'>
+                        <div className='menu-trigger'>
+                            <Link to='/'>
+
                                 <span className="logo"><SiLinktree />
                                 </span>
-                            </div>
-                        </Link>
+                            </Link>
+                            <Link to='/appearance'>
+                                <div className="appearance-link">
+                                    <BiImages className="appearance-icon" />
+                                    Appearance
+                                </div>
+                            </Link>
+                            
+                        </div>
+
                         <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
                             <span>{userInfo && userInfo.username ? userInfo.username.charAt(0).toUpperCase() : null} </span>
                         </div>
@@ -98,7 +108,7 @@ const Header = () => {
                     </div>
                 ) : (
                     <div className='nav-right'>
-                        <Link  to='/'>
+                        <Link to='/'>
                             <div className='menu-trigger'>
                                 <span className="logo"><SiLinktree />
                                 </span>
