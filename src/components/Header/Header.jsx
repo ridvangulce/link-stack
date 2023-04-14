@@ -83,6 +83,12 @@ const Header = () => {
                                     Appearance
                                 </div>
                             </Link>
+                            <Link to='/drive'>
+                                <div className="appearance-link">
+                                    <BiImages className="appearance-icon" />
+                                    Drive
+                                </div>
+                            </Link>
                             
                         </div>
 

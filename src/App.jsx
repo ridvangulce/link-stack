@@ -12,7 +12,6 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import AppearancePage from './pages/Appearance/AppearancePage';
 import DrivePage from './pages/DrivePage/DrivePage';
 
-
 function App() {
   return (
     <UserContextProvider>
@@ -22,8 +21,10 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/appearance" element={<AppearancePage/>} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile/:username" element={<ProfilePage />} />
           <Route path="/drive" element={<DrivePage />} />
+          <Route path="/profile/:username" element={<ProfilePage />} />
+          <Route path="/profile/:username" element={<ProfilePage />} />
+
         </Route>
       </Routes>
     </UserContextProvider>
