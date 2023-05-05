@@ -74,18 +74,21 @@ const ProfilePage = () => {
                     <h1>Posts for {formattedUsername}</h1>
                     {posts.map((post) => (
                         <div key={post.id}>
-                            {post.url ? (
-                                <img src={post.url} alt="Selected file" width="500" height="500" onLoad={() => console.log('Image loaded')} typeof="image/jpeg" />
-                            ) : (
-                                <div key={post.id} dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                            {post.url && ( // post.url mevcut ise
+                                post.isPdf ? (
+                                    <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+                                ) : (
+                                    <img src={post.url} alt={post.title} height="500" width="500" />
+                                )
                             )}
-
+                            <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
                         </div>
                     ))}
                 </>
             )}
         </div>
     );
+    
 };
 
 export default ProfilePage;

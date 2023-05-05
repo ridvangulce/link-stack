@@ -164,28 +164,19 @@ const Post = () => {
                                                 {editingId === post.id ? (
                                                     <div className="post-text-container" onBlur={() => handleBlur(post)}>
                                                         <FaGripLines className="drag-icon content" />
-                                                        {post.url ? (
-                                                            <div className="content-container content">
-                                                                <img
-                                                                    src={post.url}
-                                                                    alt="Selected file"
-                                                                    width="500"
-                                                                    height="500"
-                                                                    onLoad={() => console.log('Image loaded')}
-                                                                    typeof="image/jpeg"
-                                                                />
-                                                            </div>
-                                                        ) : (
-                                                            <div className="content-container content">
-                                                                <input
-                                                                    className="post-text-area content"
-                                                                    ref={inputRef}
-                                                                    defaultValue={content}
-                                                                    onChange={(e) => setContent(e.target.value)}
-                                                                    autoFocus
-                                                                />
-                                                            </div>
+                                                        {post.url && (
+                                                            post.isPdf ? (
+                                                                <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+
+                                                            ) : (
+                                                                <img src={post.url} alt={post.title} height="500" width="500" />
+
+                                                            )
                                                         )}
+                                                        <div className="content-container content">
+                                                            <input className="post-text-area content" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus
+                                                            />
+                                                        </div>
                                                         <div className="right-side-container content">
                                                             <div
                                                                 className={post.isActive ? 'toggle-button active' : 'toggle-button'}
@@ -207,35 +198,29 @@ const Post = () => {
                                                 ) : (
                                                     <div className="texts">
                                                         <FaGripLines className="drag-icon content" />
-                                                        {post.url ? (
-                                                            <div className="content-container content">
-                                                                <img
-                                                                    src={post.url}
-                                                                    alt="Selected file"
-                                                                    width="500"
-                                                                    height="500"
-                                                                    onLoad={() => console.log('Image loaded')}
-                                                                    typeof="image/jpeg"
-                                                                />
-                                                                <BsPencil
-                                                                    className="edit-pen-icon"
-                                                                    onClick={() => handleEditClick(post)}
-                                                                />
-                                                            </div>
-                                                        ) : (
-                                                            <div className="content-container content">
-                                                                <p
-                                                                    className="texts-content"
-                                                                    onClick={() => handleEditClick(post)}
-                                                                >
-                                                                    {post.content}
-                                                                </p>
-                                                                <BsPencil
-                                                                    className="edit-pen-icon"
-                                                                    onClick={() => handleEditClick(post)}
-                                                                />
-                                                            </div>
-                                                        )}
+                                                        {post.url && (
+                                                            post.isPdf ? (
+                                                                <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+
+                                                            ) : (
+                                                                <img src={post.url} alt={post.title} height="500" width="500" />
+
+                                                            )
+                                                        )} 
+                                                        <div className="content-container content">
+                                                            <p
+                                                                className="texts-content"
+                                                                onClick={() => handleEditClick(post)}
+
+                                                            >
+                                                                {post.content}
+                                                                
+                                                                
+                                                                
+                                                            </p>
+                                                           
+                                                        </div>
+                                                        
                                                         <div className="right-side-container content">
                                                             <div
                                                                 className={post.isActive ? 'toggle-button active' : 'toggle-button'}

@@ -60,18 +60,14 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                         <h2>@{userInfo.username}</h2>
                         {posts.map((post) => (
                             <div key={post.id}>
-                                {post.url ? (
-                                    <img
-                                        src={post.url}
-                                        alt="Selected file"
-                                        width="200"
-                                        height="200"
-                                        onLoad={() => console.log('Image loaded')}
-                                        typeof="image/jpeg"
-                                    />
+                             {post.url && ( // post.url mevcut ise
+                                post.isPdf ? (
+                                    <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
                                 ) : (
-                                    <p>{post.content}</p>
-                                )}
+                                    <img src={post.url} alt={post.title} height="500px" width="300px" />
+                                )
+                            )}
+                            <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
                             </div>
                         ))}
                     </>
