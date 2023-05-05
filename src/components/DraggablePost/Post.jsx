@@ -159,12 +159,23 @@ const Post = () => {
                                                 className="post"
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
-                                                {...provided.dragHandleProps} >
-                                                {editingId === post.id
-
-                                                    ? (
-                                                        <div className="post-text-container" onBlur={() => handleBlur(post)} >
-                                                            <FaGripLines className="drag-icon content" />
+                                                {...provided.dragHandleProps}
+                                            >
+                                                {editingId === post.id ? (
+                                                    <div className="post-text-container" onBlur={() => handleBlur(post)}>
+                                                        <FaGripLines className="drag-icon content" />
+                                                        {post.url ? (
+                                                            <div className="content-container content">
+                                                                <img
+                                                                    src={post.url}
+                                                                    alt="Selected file"
+                                                                    width="500"
+                                                                    height="500"
+                                                                    onLoad={() => console.log('Image loaded')}
+                                                                    typeof="image/jpeg"
+                                                                />
+                                                            </div>
+                                                        ) : (
                                                             <div className="content-container content">
                                                                 <input
                                                                     className="post-text-area content"
@@ -174,40 +185,81 @@ const Post = () => {
                                                                     autoFocus
                                                                 />
                                                             </div>
-                                                            <div className="right-side-container content">
-                                                                <div className={post.isActive ? "toggle-button active" : "toggle-button"} onClick={() => handleToggle(post)}   >
-                                                                    <div className="toggle-knob"></div>
-                                                                </div>
-                                                                <button className="delete-btn" onClick={() => handleDelete(post.id)}>
-                                                                    <BsFillTrash3Fill className="delete-btn-icon" onClick={() => handleDelete(post.id)} />
-                                                                </button>
+                                                        )}
+                                                        <div className="right-side-container content">
+                                                            <div
+                                                                className={post.isActive ? 'toggle-button active' : 'toggle-button'}
+                                                                onClick={() => handleToggle(post)}
+                                                            >
+                                                                <div className="toggle-knob"></div>
                                                             </div>
+                                                            <button
+                                                                className="delete-btn"
+                                                                onClick={() => handleDelete(post.id)}
+                                                            >
+                                                                <BsFillTrash3Fill
+                                                                    className="delete-btn-icon"
+                                                                    onClick={() => handleDelete(post.id)}
+                                                                />
+                                                            </button>
                                                         </div>
-                                                    ) : (
-                                                        <div className="texts" >
-                                                            <FaGripLines className="drag-icon content" />
+                                                    </div>
+                                                ) : (
+                                                    <div className="texts">
+                                                        <FaGripLines className="drag-icon content" />
+                                                        {post.url ? (
                                                             <div className="content-container content">
-                                                                <p className="texts-content" onClick={() => handleEditClick(post)}>{post.content}</p>
-
-                                                                <BsPencil className="edit-pen-icon" onClick={() => handleEditClick(post)} />
+                                                                <img
+                                                                    src={post.url}
+                                                                    alt="Selected file"
+                                                                    width="500"
+                                                                    height="500"
+                                                                    onLoad={() => console.log('Image loaded')}
+                                                                    typeof="image/jpeg"
+                                                                />
+                                                                <BsPencil
+                                                                    className="edit-pen-icon"
+                                                                    onClick={() => handleEditClick(post)}
+                                                                />
                                                             </div>
-
-                                                            <div className="right-side-container content">
-                                                                <div className={post.isActive ? "toggle-button active" : "toggle-button"} onClick={() => handleToggle(post)}   >
-                                                                    <div className="toggle-knob"></div>
-                                                                </div>
-                                                                <button className="delete-btn" onClick={() => handleDelete(post.id)}>
-                                                                    <BsFillTrash3Fill className="delete-btn-icon" onClick={() => handleDelete(post.id)} />
-                                                                </button>
+                                                        ) : (
+                                                            <div className="content-container content">
+                                                                <p
+                                                                    className="texts-content"
+                                                                    onClick={() => handleEditClick(post)}
+                                                                >
+                                                                    {post.content}
+                                                                </p>
+                                                                <BsPencil
+                                                                    className="edit-pen-icon"
+                                                                    onClick={() => handleEditClick(post)}
+                                                                />
                                                             </div>
+                                                        )}
+                                                        <div className="right-side-container content">
+                                                            <div
+                                                                className={post.isActive ? 'toggle-button active' : 'toggle-button'}
+                                                                onClick={() => handleToggle(post)}
+                                                            >
+                                                                <div className="toggle-knob"></div>
+                                                            </div>
+                                                            <button
+                                                                className="delete-btn"
+                                                                onClick={() => handleDelete(post.id)}
+                                                            >
+                                                                <BsFillTrash3Fill
+                                                                    className="delete-btn-icon"
+                                                                    onClick={() => handleDelete(post.id)}
+                                                                />
+                                                            </button>
                                                         </div>
-
-                                                    )}
-
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </Draggable>
                                 ))}
+
                                 {provided.placeholder}
 
                             </div>

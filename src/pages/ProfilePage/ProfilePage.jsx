@@ -73,7 +73,14 @@ const ProfilePage = () => {
                 <>
                     <h1>Posts for {formattedUsername}</h1>
                     {posts.map((post) => (
-                        <div key={post.id} dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                        <div key={post.id}>
+                            {post.url ? (
+                                <img src={post.url} alt="Selected file" width="500" height="500" onLoad={() => console.log('Image loaded')} typeof="image/jpeg" />
+                            ) : (
+                                <div key={post.id} dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                            )}
+
+                        </div>
                     ))}
                 </>
             )}

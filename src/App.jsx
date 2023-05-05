@@ -11,7 +11,6 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import AppearancePage from './pages/Appearance/AppearancePage';
 import DrivePage from './pages/DrivePage/DrivePage';
-import GooglePicker from './pages/GooglePicker';
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<IndexPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/appearance" element={<AppearancePage/>} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/drive" element={<DrivePage />} />
           <Route path="/profile/:username" element={<ProfilePage />} />

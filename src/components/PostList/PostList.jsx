@@ -10,7 +10,7 @@ import {
     where
 } from "firebase/firestore";
 
-const PostList = ({ handleDragEnd, handleToggle}) => {
+const PostList = ({ handleDragEnd, handleToggle }) => {
     const [posts, setPosts] = useState([]);
     const [userNotFound, setUserNotFound] = useState(false);
     const [postNotFound, setPostNotFound] = useState(false);
@@ -60,7 +60,18 @@ const PostList = ({ handleDragEnd, handleToggle}) => {
                         <h2>@{userInfo.username}</h2>
                         {posts.map((post) => (
                             <div key={post.id}>
-                                <p>{post.content}</p>
+                                {post.url ? (
+                                    <img
+                                        src={post.url}
+                                        alt="Selected file"
+                                        width="200"
+                                        height="200"
+                                        onLoad={() => console.log('Image loaded')}
+                                        typeof="image/jpeg"
+                                    />
+                                ) : (
+                                    <p>{post.content}</p>
+                                )}
                             </div>
                         ))}
                     </>
@@ -68,6 +79,7 @@ const PostList = ({ handleDragEnd, handleToggle}) => {
             </div>
         </section>
     );
+
 };
 
 export default PostList;

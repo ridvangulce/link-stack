@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import useDrivePicker, { Picker } from 'react-google-drive-picker'
-import GoogleDrivePicker from '../../GoogleDrivePicker';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
+import React, { useState } from 'react'
+import useDrivePicker from 'react-google-drive-picker'
+import { collection, addDoc, getDocs, query, orderBy  } from "firebase/firestore";
 import { db, storage } from '../../firebase';
-import { saveAs } from "file-saver";
-import GooglePicker from '../GooglePicker';
+import { getAuth } from 'firebase/auth';
 import "./DrivePage.css"
 const DrivePage = () => {
     const [fileUrl, setFileUrl] = useState(null); // Dosya indirme URL'sini saklayan state
@@ -17,14 +14,14 @@ const DrivePage = () => {
     const handleFileSelected = (file) => {
         setSelectedFile(file);
     };
-
-
+    const auth = getAuth();
+    const user = auth.currentUser;
 
     const handleOpenPicker = () => {
         openPicker({
             clientId: "199725687580-saejekme0na6ajpfcm3c6r4pq70e9r8j.apps.googleusercontent.com",
             developerKey: "AIzaSyCiRp791U707DblwSn1VM7O6njYiYhjc3k",
-            token: "ya29.a0Ael9sCMwNHu5cPG9-sgosaDQf9iBeek1qRUm46jxG2vzFyozBa0jcRwl6sNkyqxRKOzkcunCXucRLEwNng1ZxkQwaZ9KhDd7V3miHjHQpVDSkPjx2dO4414Ok9wlNJa6XX_Wjn8HMVyXtRVaC1vdioCJZs5-aCgYKAaYSARISFQF4udJhep8wAzaS0FbJoW7i1kvZSQ0163",
+            token: "ya29.a0AWY7Ckl0HCn5vCnUC3FWIHQqRc1dLB0i5escZJV41POiQjnI4lHIu4EYk9zJUDVTZl6bTY7o4-NJsm5tonOS5oKdXWN4ngUZZB5Afn9lJm7fqQv26LUllwylDowA7W8GqtErmifTmDCIXfS_9n_IovUyn9LIaCgYKASMSARISFQG1tDrpYawsN-ZDolV4wnW4GaTs4A0163",
             showUploadFolders: true,
             supportDrives: true,
             multiselect: true,
@@ -49,8 +46,29 @@ const DrivePage = () => {
                     console.log(shareableLink);
 
                     try {
-                        await addDoc(collection(db, "images"), { url: shareableLink });
+                        // Verileri sırayla alma
+                        const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("order")));
+
+                        // Son belgenin order değerini alma
+                        const lastPost = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+                        // Yeni belgenin order değerini hesaplama
+                        let newOrder;
+                        if (lastPost) {
+                            newOrder = lastPost.data().order + 1;
+                        } else {
+                            newOrder = 0;
+                        }
+
+                        const postData = {
+                            time: new Date(),
+                            uid: user.uid,
+                            url: shareableLink,
+                            order: newOrder // Yeni belgenin order değeri
+                        };
+                        await addDoc(collection(db, "posts"), postData);
                         console.log("Shareable link added to Firestore!");
+                        console.log(user.uid);
                     } catch (error) {
                         console.log("ERRORRR!", error);
                     }
@@ -67,7 +85,6 @@ const DrivePage = () => {
             <button onClick={() => handleOpenPicker()}>Select File</button>
             {selectedFileUrl && (
                 <div>
-                    <p>You selected:</p>
                     {selectedFileUrl.endsWith(".pdf") ? (
                         <iframe src={selectedFileUrl} title="Selected file" width="500" height="500" onLoad={() => console.log('Image loaded')} typeof="application/pdf" />
                     ) : (

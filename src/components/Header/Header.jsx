@@ -77,12 +77,6 @@ const Header = () => {
                                 <span className="logo"><SiLinktree />
                                 </span>
                             </Link>
-                            <Link to='/appearance'>
-                                <div className="appearance-link">
-                                    <BiImages className="appearance-icon" />
-                                    Appearance
-                                </div>
-                            </Link>
                             <Link to='/drive'>
                                 <div className="appearance-link">
                                     <BiImages className="appearance-icon" />
