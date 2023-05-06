@@ -53,7 +53,14 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
     return (
         <section>
             <div className="post-list">
-                {postNotFound && <p>Post not found</p>}
+                {postNotFound && (
+                    <div>
+                        <div className='menu-trigger'>
+                            <span>{userInfo && userInfo.username ? userInfo.username.charAt(0).toUpperCase() : null} </span>
+                        </div>
+                        <h2>@{userInfo.username}</h2>
+                    </div>
+                )}
                 {!postNotFound && (
                     <>
                         <div className='menu-trigger'>
@@ -71,7 +78,7 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                                     )
                                 )}
                                 <div>
-                                    <h1>
+                                    <h1 className="font-bold">
                                         {post.content}
                                     </h1>
                                 </div>

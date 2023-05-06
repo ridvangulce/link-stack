@@ -22,7 +22,6 @@ const DrivePage = () => {
         openPicker({
             clientId: "199725687580-saejekme0na6ajpfcm3c6r4pq70e9r8j.apps.googleusercontent.com",
             developerKey: "AIzaSyCiRp791U707DblwSn1VM7O6njYiYhjc3k",
-            token: "ya29.a0AWY7CknQWNur1LgDF5fj30apII6uOhRsThzNF9C7LXjBfIH5mgLV9a3NscZTznO6oUiPlgfp7C2s8i403o97nvafGTX37PlzAzXAjfMc1kX-w1vG-Ew6Qg-A-mmATm3M6Vkbe-yO2J-YvM6hkN6vC4MSRwglaCgYKAWwSARISFQG1tDrpQ8NCaVXOItl_FLOPCmS4pA0163",
             showUploadFolders: true,
             supportDrives: true,
             multiselect: false,
@@ -78,7 +77,6 @@ const DrivePage = () => {
     return (
         <div>
             <button onClick={() => handleOpenPicker()}>Select File</button>
-            {isUploaded && <p>Dosyalar yüklendi!</p>}
         </div>
     );
 };

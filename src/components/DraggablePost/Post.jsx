@@ -94,29 +94,29 @@ const Post = () => {
 
     const handleDragEnd = async (result) => {
         if (!result.destination) return;
-      
+
         const newPosts = Array.from(posts);
         const [reorderedItem] = newPosts.splice(result.source.index, 1);
         newPosts.splice(result.destination.index, 0, reorderedItem);
-      
+
         // Yeniden hesaplanmış sıralama değerlerini oluştur
         const updatedPosts = newPosts.map((post, index) => ({
-          ...post,
-          order: index,
+            ...post,
+            order: index,
         }));
-      
+
         // Sıralama bilgisini Firestore'a yaz
         const batch = writeBatch(db);
         updatedPosts.forEach((post) => {
-          const ref = doc(db, "posts", post.id);
-          batch.update(ref, post);
+            const ref = doc(db, "posts", post.id);
+            batch.update(ref, post);
         });
         await batch.commit();
-      
+
         // PostList componentinin yeniden render edilmesi için setPosts fonksiyonunu çağıralım
         setPosts(updatedPosts);
-      };
-      
+    };
+
 
 
     const handleBlur = (post) => {
@@ -155,9 +155,9 @@ const Post = () => {
     return (
         <div className="flex flex-col md:flex-row">
             <div className="w-full md:w-3/4">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full md:w-1/3 " onClick={changePostState}>Add Post</button>
+                {postOpen && <AddPost />}
                 <DragDropContext onDragEnd={handleDragEnd}>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={changePostState}>Add Post</button>
-                    {postOpen && <AddPost />}
                     <Droppable droppableId="posts">
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="mt-4 md:mt-0">
@@ -165,79 +165,59 @@ const Post = () => {
                                     <Draggable key={post.id} draggableId={post.id} index={index}>
                                         {(provided) => (
                                             <div
-                                                className="bg-white rounded shadow-md mb-4 p-4 flex items-center"
+                                                className="rounded-xl shadow-md mb-4 ml-4 md:ml-36 p-4 grid grid-cols-3 items-center md:items-stretch w-full md:w-2/4 h-3/4 bg-white"
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                             >
-                                                <div className="flex-1">
+                                                <div className="drag-icon text-gray-400 ">
+                                                    <FaGripLines />
+                                                </div>
+                                                <div className="col-span-2">
                                                     {editingId === post.id ? (
                                                         <div className="post-text-container" onBlur={() => handleBlur(post)}>
-                                                            {post.url && (
-                                                                post.isPdf ? (
-                                                                    <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
-
-                                                                ) : (
-                                                                    <img src={post.url} alt={post.title} height="500" width="500" />
-
-                                                                )
+                                                            {post.url && post.isPdf ? (
+                                                                <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+                                                            ) : (
+                                                                <img src={post.url} alt={post.title} height="500" width="500" />
                                                             )}
                                                             <div className="content-container content">
-                                                                <input className="post-text-area content w-full" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
-                                                            </div>
-                                                            <div className="right-side-container content flex items-center">
-                                                                <div
-                                                                    className={post.isActive ? 'toggle-button active' : 'toggle-button'}
-                                                                    onClick={() => handleToggle(post)}
-                                                                >
-                                                                    <div className="toggle-knob"></div>
-                                                                </div>
-                                                                <button
-                                                                    className="delete-btn ml-4"
-                                                                    onClick={() => handleDelete(post.id)}
-                                                                >
-                                                                    <BsFillTrash3Fill className="delete-btn-icon" />
-                                                                </button>
+                                                                <input className="post-text-area content w-full font-bold focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
                                                             </div>
                                                         </div>
                                                     ) : (
                                                         <div className="texts">
-                                                            {post.url && (
-                                                                post.isPdf ? (
-                                                                    <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
-
-                                                                ) : (
-                                                                    <img src={post.url} alt={post.title} height="500" width="500" />
-
-                                                                )
+                                                            {post.url && post.isPdf ? (
+                                                                <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+                                                            ) : (
+                                                                <img src={post.url} alt={post.title} height="500" width="500" />
                                                             )}
-                                                            <div className="content-container content">
+                                                            <div className="content-container content ">
                                                                 <p
                                                                     className="texts-content cursor-pointer"
                                                                     onClick={() => handleEditClick(post)}
                                                                 >
-                                                                    <h2>{post.content}</h2>
+                                                                    <h2 className="font-bold flex-nowrap">{post.content}</h2>
                                                                 </p>
-                                                            </div>
-                                                            <div className="right-side-container content flex items-center">
-                                                                <div
-                                                                    className={post.isActive ? 'toggle-button active' : 'toggle-button'}
-                                                                    onClick={() => handleToggle(post)}
-                                                                >
-                                                                    <div className="toggle-knob"></div>
-                                                                </div>
-                                                                <button
-                                                                    className="delete-btn ml-4"
-                                                                    onClick={() => handleDelete(post.id)}
-                                                                >
-                                                                    <BsFillTrash3Fill className="delete-btn-icon" />
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     )}
                                                 </div>
-                                                <div className="drag-icon text-gray-400 ">
-                                                    <FaGripLines />
+                                                <div className="col-start-4 md:flex md:flex-row md:justify-end md:items-center">
+                                                    <div className="md:m-4">
+                                                        <div
+                                                            className={post.isActive ? 'toggle-button active' : 'toggle-button'}
+                                                            onClick={() => handleToggle(post)}
+                                                        >
+                                                            <div className="toggle-knob"></div>
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        className="delete-btn ml-4"
+                                                        onClick={() => handleDelete(post.id)}
+                                                    >
+                                                        <BsFillTrash3Fill className="delete-btn-icon" />
+                                                    </button>
                                                 </div>
                                             </div>
                                         )}
@@ -249,13 +229,15 @@ const Post = () => {
                     </Droppable>
                 </DragDropContext>
             </div>
-            <div className="w-full md:w-1/4 mt-4 md:mt-0">
-                <PostList handleDragEnd={handleDragEnd} handleToggle={handleToggle} />
+            <div className="w-full md:w-1/3">
+                <div className="mt-4 hidden md:block">
+                    <PostList handleDragEnd={handleDragEnd} handleToggle={handleToggle} />
+                </div>
             </div>
         </div>
-
-
     );
+
+
 
 
 };

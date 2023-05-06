@@ -4,7 +4,7 @@ import { db } from '../../firebase';
 import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
 import "./AddPost.css"
 import { useNavigate } from 'react-router-dom';
-
+import DrivePage from '../../pages/DrivePage/DrivePage';
 const AddPost = () => {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -32,7 +32,7 @@ const AddPost = () => {
       time: new Date(),
       uid: user.uid,
       order: newOrder,
-      isActive: false 
+      isActive: false
     };
 
     // Yeni belgenin Firestore'a eklenmesi
@@ -51,10 +51,20 @@ const AddPost = () => {
   };
 
   return (
-    <div>
-      <button className='btn' onClick={handleAddPostClick} disabled={isLoading}>
-        {isLoading ? "Adding Post..." : "Add Post"}
-      </button>
+    <div className='container bg-red-500 h-64'>
+      <div className='flex bg-yellow-400 space-x-5'>
+
+        <div>
+          <button className='bg-blue-300 p-4 items-center rounded-3xl' onClick={handleAddPostClick} disabled={isLoading}>
+            {isLoading ? "Adding Header..." : "Header"}
+          </button>
+        </div>
+        <div>
+          <button className='bg-blue-300 p-4 items-center rounded-3xl' disabled={isLoading}>
+            <DrivePage />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

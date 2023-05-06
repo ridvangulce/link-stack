@@ -70,7 +70,7 @@ const Header = () => {
             <nav>
 
                 {userInfo ? (
-                    <div className='menu-container' ref={menuRef}>
+                    <div className='menu-container bg-white' ref={menuRef}>
                         <div className='menu-trigger'>
                             <Link to='/'>
 
