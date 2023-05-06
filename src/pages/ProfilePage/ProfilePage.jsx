@@ -81,14 +81,18 @@ const ProfilePage = () => {
                                     <img src={post.url} alt={post.title} height="500" width="500" />
                                 )
                             )}
-                            <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                            <div>
+                                <h2>
+                                    {post.content}
+                                </h2>
+                            </div>
                         </div>
                     ))}
                 </>
             )}
         </div>
     );
-    
+
 };
 
 export default ProfilePage;

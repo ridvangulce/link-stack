@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { getAuth } from "firebase/auth";
 import { db } from '../../firebase';
 import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
@@ -99,15 +99,14 @@ const CreatePost = () => {
           name="content"
           value={content}
           onChange={handleContentChange}
-          onBlur={handleInputBlur} 
+          onBlur={handleInputBlur}
           ref={inputRef}
         />
         {contentError && (
           <div className="error">
             <p>{contentError}</p>
           </div>
-        )}{" "}
-        {/* Hata mesajı */}
+        )}
       </div>
     </form>
   );

@@ -9,12 +9,14 @@ import {
     orderBy,
     where
 } from "firebase/firestore";
-
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+import '@react-pdf-viewer/core/lib/styles/index.css';
 const PostList = ({ handleDragEnd, handleToggle }) => {
     const [posts, setPosts] = useState([]);
     const [userNotFound, setUserNotFound] = useState(false);
     const [postNotFound, setPostNotFound] = useState(false);
     const { userInfo = {}, setUserInfo } = useContext(UserContext)
+
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -24,7 +26,7 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                     return;
                 }
                 const userId = user.uid;
-                // Kullanıcının postlarını çekme
+
                 const snapshot = await getDocs(
                     query(
                         collection(db, "posts"),
@@ -60,14 +62,19 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                         <h2>@{userInfo.username}</h2>
                         {posts.map((post) => (
                             <div key={post.id}>
-                             {post.url && ( // post.url mevcut ise
-                                post.isPdf ? (
-                                    <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
-                                ) : (
-                                    <img src={post.url} alt={post.title} height="500px" width="300px" />
-                                )
-                            )}
-                            <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                                {post.url && ( // post.url mevcut ise
+                                    post.isPdf ? (
+                                        <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+
+                                    ) : (
+                                        <img src={post.url} alt={post.title} height="500px" width="300px" />
+                                    )
+                                )}
+                                <div>
+                                    <h1>
+                                        {post.content}
+                                    </h1>
+                                </div>
                             </div>
                         ))}
                     </>
