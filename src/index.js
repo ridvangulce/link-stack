@@ -10,7 +10,6 @@ root.render(
 
   <BrowserRouter >
     <div >
-
       <App />
     </div>
   </BrowserRouter>

@@ -186,8 +186,8 @@ const Post = () => {
                           ) : (
                             <div >
                               {post.url && post.isPdf ? (
-                                <iframe src={post.url} width="100%" height="500px" allowFullScreen="true" frameborder="1" border="1px" cellspacing="0"
-                                 />
+                                <iframe src={post.url} width="100%" height="500px" 
+                                />
                               ) : (
                                 post.url && <img src={post.url} alt={post.title} height="500px" width="500px " />
                               )}

@@ -51,9 +51,7 @@ const AddPost = () => {
   };
 
   return (
-    <div className='container bg-red-500 h-64'>
-      <div className='flex bg-yellow-400 space-x-5'>
-
+      <div className='flex items-center justify-around space-x-5 h-auto'>
         <div>
           <button className='bg-blue-300 p-4 items-center rounded-3xl' onClick={handleAddPostClick} disabled={isLoading}>
             {isLoading ? "Adding Header..." : "Header"}
@@ -65,7 +63,6 @@ const AddPost = () => {
           </button>
         </div>
       </div>
-    </div>
   );
 };
 

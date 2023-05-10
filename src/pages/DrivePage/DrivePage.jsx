@@ -20,8 +20,8 @@ const DrivePage = () => {
 
     const handleOpenPicker = () => {
         openPicker({
-            clientId: "199725687580-saejekme0na6ajpfcm3c6r4pq70e9r8j.apps.googleusercontent.com",
-            developerKey: "AIzaSyCiRp791U707DblwSn1VM7O6njYiYhjc3k",
+            clientId: process.env.REACT_APP_CLIENT_ID,
+            developerKey: process.env.REACT_APP_DEVELOPER_KEY,
             showUploadFolders: true,
             supportDrives: true,
             multiselect: false,
