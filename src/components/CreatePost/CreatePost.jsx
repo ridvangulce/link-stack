@@ -76,7 +76,7 @@ const CreatePost = () => {
 
     createNewPost()
       .then(() => {
-        navigate("/");
+        navigate("/link-stack");
       })
       .catch((error) => {
         console.error("Hata oluştu: ", error);

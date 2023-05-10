@@ -40,7 +40,7 @@ const AddPost = () => {
 
     setIsLoading(false); // Veri ekleme tamamlandığında loading durumunu false olarak ayarlayın
 
-    navigate("/"); // Anasayfaya yönlendir
+    navigate("/link-stack"); // Anasayfaya yönlendir
   };
 
   const handleAddPostClick = () => {

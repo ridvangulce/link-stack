@@ -45,7 +45,7 @@ const Header = () => {
     function logout() {
         signOut(auth).then(() => {
             // Sign-out successful.
-            navigate("/login")
+            navigate("/link-stack/login")
             console.log();
         }).catch((error) => {
             // An error happened.
@@ -55,7 +55,7 @@ const Header = () => {
 
     function handleProfileClick() {
 
-        window.location.href = `/profile/${userInfo.username}`; // programatik olarak yönlendirme yapmak için
+        window.location.href = `/link-stack/profile/${userInfo.username}`; // programatik olarak yönlendirme yapmak için
 
     }
     function DropdownItem(props) {
@@ -72,12 +72,12 @@ const Header = () => {
                 {userInfo ? (
                     <div className='menu-container bg-white' ref={menuRef}>
                         <div className='menu-trigger'>
-                            <Link to='/'>
+                            <Link to='/link-stack'>
 
                                 <span className="logo"><SiLinktree />
                                 </span>
                             </Link>
-                            <Link to='/drive'>
+                            <Link to='/link-stack/drive'>
                                 <div className="appearance-link">
                                     <BiImages className="appearance-icon" />
                                     Drive
@@ -108,7 +108,7 @@ const Header = () => {
                     </div>
                 ) : (
                     <div className='nav-right'>
-                        <Link to='/'>
+                        <Link to='/link-stack'>
                             <div className='menu-trigger'>
                                 <span className="logo"><SiLinktree />
                                 </span>
