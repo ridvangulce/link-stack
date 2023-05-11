@@ -55,7 +55,7 @@ const Header = () => {
 
     function handleProfileClick() {
 
-        window.location.href = `/link-stack/profile/${userInfo.username}`; // programatik olarak yönlendirme yapmak için
+        window.location.href = `/link-stack/${userInfo.username}`; // programatik olarak yönlendirme yapmak için
 
     }
     function DropdownItem(props) {

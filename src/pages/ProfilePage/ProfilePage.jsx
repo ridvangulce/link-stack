@@ -35,7 +35,6 @@ const ProfilePage = () => {
                 const userDoc = querySnapshot.docs[0];
                 const { uid } = userDoc.data();
 
-                console.log(`UID for ${username}: ${uid}`);
                 setUserId(uid);
 
             } catch (error) {

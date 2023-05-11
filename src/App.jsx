@@ -20,7 +20,7 @@ function App() {
           <Route index element={<IndexPage />} />
           <Route path="/link-stack/login" element={<LoginPage />} />
           <Route path="/link-stack/register" element={<RegisterPage />} />
-          <Route path="/link-stack/profile/:username" element={<ProfilePage />} />
+          <Route path="/link-stack/:username" element={<ProfilePage />} />
 
         </Route>
       </Routes>
