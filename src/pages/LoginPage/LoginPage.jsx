@@ -19,7 +19,7 @@ const LoginPage = () => {
             .then((userCredential, userInfo) => {
                 console.log(userCredential);
                 setUserInfo(userInfo);
-                navigate("/link-stack");
+                navigate("/");
             })
             .catch((error) => {
                 console.log(error);
@@ -29,7 +29,7 @@ const LoginPage = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                navigate("/link-stack");
+                navigate("/");
             }
         });
         return unsubscribe;

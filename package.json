@@ -1,5 +1,4 @@
 {
-  "homepage": "https://ridvangulce.github.io/link-stack",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +14,7 @@
     "firebase": "^9.17.2",
     "firebase-admin": "^11.7.0",
     "firebase-functions": "^4.2.1",
+    "firebase-tools": "^12.0.0",
     "google-auth-library": "^8.7.0",
     "googleapis": "^117.0.0",
     "pdfjs-dist": "^3.4.120",
@@ -35,9 +35,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy":" npm run build",
-    "deploy":"gh-pages -d build"
+    "eject": "react-scripts eject"
+ 
   },
   "eslintConfig": {
     "extends": [

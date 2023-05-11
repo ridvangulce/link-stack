@@ -46,7 +46,7 @@ const RegisterPage = () => {
 
 
                 console.log(userCredential);
-                navigate("/link-stack");
+                navigate("/");
             })
             .catch((error) => {
                 console.log(error);
