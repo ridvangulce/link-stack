@@ -79,3 +79,16 @@
 .toggle-button.active .toggle-knob {
   transform: translateX(14px);
 }
+
+.add-section {
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.7s ease-in-out;
+}
+
+.add-section.open {
+  opacity: 1;
+  overflow: visible;
+  transition: all 0.7s ease-in-out;
+
+}

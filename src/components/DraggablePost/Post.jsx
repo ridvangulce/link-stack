@@ -158,7 +158,9 @@ const Post = () => {
         <div className="flex justify-center items-center m-5">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  w-full h-auto md:w-1/3 " onClick={changePostState}>Add Section</button>
         </div>
-        {postOpen && <AddPost />}
+        <div className={`add-section ${postOpen ? "open" : ""}`}>
+          {postOpen && <AddPost />}
+        </div>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="posts">
             {(provided) => (
@@ -186,7 +188,7 @@ const Post = () => {
                           ) : (
                             <div >
                               {post.url && post.isPdf ? (
-                                <iframe src={post.url} width="100%" height="500px" 
+                                <iframe src={post.url} width="100%" height="500px"
                                 />
                               ) : (
                                 post.url && <img src={post.url} alt={post.title} height="500px" width="500px " />
