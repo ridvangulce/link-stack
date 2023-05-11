@@ -110,8 +110,8 @@ const Header = () => {
                             </div>
                         </Link>
                         <div className="form-route">
-                            <Link to='/login'>Login</Link>
-                            <Link to='/register'>Register</Link>
+                            <Link to='/link-stack/login'>Login</Link>
+                            <Link to='/link-stack/register'>Register</Link>
                         </div>
                     </div>
                 )}
