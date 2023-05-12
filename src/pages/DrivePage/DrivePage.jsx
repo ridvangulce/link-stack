@@ -59,7 +59,8 @@ const DrivePage = () => {
                             uid: user.uid,
                             url: shareableLink,
                             order: newOrder,
-                            isPdf: isPdf ? true : false
+                            isPdf: isPdf ? true : false,
+                            title: "Header"
                         };
                         await addDoc(collection(db, "posts"), postData);
                         setIsUploaded(true);
