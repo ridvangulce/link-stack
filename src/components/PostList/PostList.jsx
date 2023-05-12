@@ -62,8 +62,8 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
     };
 
     return (
-        <section>
-            <div className="post-list">
+        <section className="container flex items-center justify-center">
+            <div className=" flex flex-col items-center justify-start px-3 pt-4 border-black border-solid border-4 rounded-3xl bg-gradient-to-r from-transparent to-blue-500 h-96 w-60 overflow-hidden hover:overflow-y-auto">
                 {postNotFound && (
                     <div>
                         <div className='menu-trigger'>
@@ -73,7 +73,7 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                     </div>
                 )}
                 {!postNotFound && (
-                    <div className="flex flex-col items-center justify-center px-3 pb-3 border-black border-solid border-4 rounded-3xl bg-gradient-to-r from-transparent to-blue-500 h-max">
+                    <div className="flex flex-col items-center justify-center px-3 pb-3 ">
                         <div className='menu-trigger'>
                             <span>{userInfo && userInfo.username ? userInfo.username.charAt(0).toUpperCase() : null} </span>
                         </div>
