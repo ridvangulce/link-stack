@@ -153,7 +153,7 @@ const Post = () => {
   };
   const changePostState = () => {
     setPostOpen(!postOpen);
-    console.log(postOpen);
+
   }
 
   if (!user || !user.uid) return <LoginPage />;

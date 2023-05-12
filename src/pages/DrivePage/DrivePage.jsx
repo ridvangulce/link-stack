@@ -33,7 +33,7 @@ const DrivePage = () => {
             mimeTypes: ["image/png", "image/jpeg", "application/pdf"],
             callbackFunction: async (data) => {
                 if (data.action === 'cancel') {
-                    console.log('User clicked cancel/close button')
+
                 } else if (data.docs && data.docs[0]) {
                     const selectedFile = data.docs[0];
                     const fileId = selectedFile.id;
@@ -42,7 +42,6 @@ const DrivePage = () => {
                     shareableLink = `https://drive.google.com/uc?export=view&id=${fileId}`;
                     setSelectedFileUrl(shareableLink);
 
-                    console.log(shareableLink);
 
                     try {
                         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("order")));
@@ -64,7 +63,6 @@ const DrivePage = () => {
                         };
                         await addDoc(collection(db, "posts"), postData);
                         setIsUploaded(true);
-                        console.log(user.uid);
                     } catch (error) {
                         console.log("ERRORRR!", error);
                     }

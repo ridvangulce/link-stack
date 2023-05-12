@@ -9,18 +9,18 @@ import {
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import PostList from "../../components/PostList/PostList";
+
 const ProfilePage = () => {
     const [userNotFound, setUserNotFound] = useState(false);
     const [userId, setUserId] = useState("");
     const [posts, setPosts] = useState([]);
-
-    const { username } = useParams(); // useParams hook'undan "username" değerini al
+    const { username } = useParams();
     const formattedUsername =
         username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                // Kullanıcı adına karşılık gelen uid'yi bulma
                 const q = query(
                     collection(db, "users"),
                     where("username", "==", username)
@@ -36,7 +36,6 @@ const ProfilePage = () => {
                 const { uid } = userDoc.data();
 
                 setUserId(uid);
-
             } catch (error) {
                 console.log("Error getting user information: ", error);
             }
@@ -47,8 +46,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         const fetchUserPosts = async () => {
-            if (!userId) return; // userId henüz ayarlanmadıysa devam etme
-
+            if (!userId) return;
 
             const postRef = collection(db, "posts");
             const postQuery = query(postRef, where("uid", "==", userId), orderBy("order"));
@@ -56,21 +54,32 @@ const ProfilePage = () => {
             const posts = postSnapshot.docs.filter(doc => doc.data().isActive).map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
+                isOpen: false, // Yeni durumu ekle
             }));
             setPosts(posts);
         };
 
-
         fetchUserPosts();
-    }, [userId, posts]);
+    }, [userId]);
 
+    const handlePostTitleClick = (postId) => {
+        setPosts(prevPosts => prevPosts.map(post => {
+            if (post.id === postId) {
+                return {
+                    ...post,
+                    isOpen: !post.isOpen, // Durumu tersine çevir
+                };
+            }
+            return post;
+        }));
+    };
 
     return (
         <div className="flex flex-col items-center justify-center px-3 p-3 rounded-3xl bg-gradient-to-r from-transparent to-blue-500">
             {userNotFound ? (
                 <p>User not found</p>
             ) : (
-                <div className="container flex  flex-col items-center justify-start gap-5 mb-5 drop-shadow-2xl ">
+                <div className="container flex flex-col items-center justify-start gap-5 mb-5 drop-shadow-2xl">
                     <div className='menu-trigger'>
                         <span >{formattedUsername.charAt(0).toUpperCase()} </span>
                     </div>
@@ -88,10 +97,22 @@ const ProfilePage = () => {
                             )}
                             {post.url && (
                                 <div>
-                                    {post.isPdf ? (
-                                        <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
-                                    ) : (
-                                        <img className="rounded-3xl" src={post.url} alt={post.title} height="400" width="400" />
+                                    <div>
+                                        <h1
+                                            className="font-bold text-2xl text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4 px-48 rounded-full hover:cursor-pointer flex items-center justify-center bg-red-500"
+                                            onClick={() => handlePostTitleClick(post.id)}
+                                        >
+                                            {post.title}
+                                        </h1>
+                                    </div>
+                                    {post.isOpen && (
+                                        <div>
+                                            {post.isPdf ? (
+                                                <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+                                            ) : (
+                                                <img className="rounded-3xl" src={post.url} alt={post.title} height="400" width="400" />
+                                            )}
+                                        </div>
                                     )}
                                 </div>
                             )}
@@ -101,7 +122,7 @@ const ProfilePage = () => {
             )}
         </div>
     );
-
 };
 
 export default ProfilePage;
+

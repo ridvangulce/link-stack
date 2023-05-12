@@ -35,7 +35,6 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                     )
                 );
                 if (snapshot.empty) {
-                    console.log(`No posts found for user: ${user.email}`);
                     setPostNotFound(true);
                 } else {
                     const filteredPosts = snapshot.docs.filter((doc) => doc.data().isActive === true);
@@ -45,12 +44,23 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
             } catch (error) {
                 console.log("Error getting documents: ", error);
             }
-            console.log("test");
         };
 
         fetchPosts();
     }, [handleDragEnd, handleToggle]);
-  
+
+    const handlePostTitleClick = (postId) => {
+        setPosts(prevPosts => prevPosts.map(post => {
+            if (post.id === postId) {
+                return {
+                    ...post,
+                    isOpen: !post.isOpen, // Durumu tersine çevir
+                };
+            }
+            return post;
+        }));
+    };
+
     return (
         <section>
             <div className="post-list">
@@ -69,20 +79,35 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                         </div>
                         <h1 className="font-bold text-lg mb-5">@{userInfo.username}</h1>
                         {posts.map((post) => (
-                            <div key={post.id} className="mb-3">
-                                {post.url && ( // post.url mevcut ise
-                                    post.isPdf ? (
-                                        <iframe src={post.url} width="200px" height="200px" style={{ overflow: "hidden" }} />
-
-                                    ) : (
-                                        <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="300px" />
-                                    )
+                            <div key={post.id} className="">
+                                {post.content && (
+                                    <div>
+                                        <h1 className="font-bold text-xs w-56 h-10 mb-3 text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4  rounded-full flex items-center justify-center">
+                                            {post.content}
+                                        </h1>
+                                    </div>
                                 )}
-                                <div>
-                                    <h1 className="font-bold text-md bg-red-200 rounded-full">
-                                        {post.content}
-                                    </h1>
-                                </div>
+                                {post.url && (
+                                    <div className="flex flex-col items-center justify-center">
+                                        <div>
+                                            <h1
+                                                className="font-bold text-xs w-56 h-10 mb-3 text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4  rounded-full hover:cursor-pointer flex items-center justify-center bg-red-500"
+                                                onClick={() => handlePostTitleClick(post.id)}
+                                            >
+                                                {post.title}
+                                            </h1>
+                                        </div>
+                                        {post.isOpen && (
+                                            <div className="flex items-center justify-center mb-3">
+                                                {post.isPdf ? (
+                                                    <iframe src={post.url} width="200" height="auto" style={{ overflow: "hidden" }} />
+                                                ) : (
+                                                    <img className="rounded-3xl" src={post.url} alt={post.title} height="auto" width="200" />
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

@@ -21,7 +21,7 @@ const CreatePost = () => {
     // Firestore'dan verileri sıralı bir şekilde almak için "order" alanına göre sıralama yaparız
     const getOrderedPosts = async () => {
       const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("order")));
-      console.log("Ordered posts", querySnapshot.docs.map(doc => doc.data()));
+
     };
     getOrderedPosts();
   }, []); // Sadece bir kez çalışması için boş bağımlılık listesi

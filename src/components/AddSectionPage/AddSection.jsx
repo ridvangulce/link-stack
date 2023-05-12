@@ -42,7 +42,7 @@ const AddSection = () => {
     };
     createNewPost(postData)
         .then(() => {
-          console.log("Yeni post başarıyla oluşturuldu!");
+          console.log("");
         })
         .catch((error) => {
           console.error("Hata oluştu: ", error);

@@ -43,9 +43,6 @@ const RegisterPage = () => {
                     console.log(error);
                 });
 
-
-
-                console.log(userCredential);
                 navigate("/");
             })
             .catch((error) => {
