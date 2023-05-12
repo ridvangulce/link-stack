@@ -37,7 +37,7 @@ const LoginPage = () => {
 
     return (
         <form className='form' onSubmit={login}>
-            <h1>Login</h1>
+
 
             <div className='form-container'>
                 <input type="email"

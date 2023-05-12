@@ -55,7 +55,7 @@ const RegisterPage = () => {
 
     return (
         <form className='form' onSubmit={register}>
-            <h1>Register</h1>
+
             <div className='form-container'>
 
                 <input

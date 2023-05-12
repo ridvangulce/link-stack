@@ -191,7 +191,7 @@ const Post = () => {
                                 <iframe src={post.url} width="100%" height="500px"
                                 />
                               ) : (
-                                post.url && <img src={post.url} alt={post.title} height="500px" width="500px " />
+                                post.url && <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px " />
                               )}
                               {!post.url && (
                                 <div>

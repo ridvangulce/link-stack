@@ -8,7 +8,7 @@ import {
     orderBy,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
-
+import PostList from "../../components/PostList/PostList";
 const ProfilePage = () => {
     const [userNotFound, setUserNotFound] = useState(false);
     const [userId, setUserId] = useState("");
@@ -49,45 +49,52 @@ const ProfilePage = () => {
         const fetchUserPosts = async () => {
             if (!userId) return; // userId henüz ayarlanmadıysa devam etme
 
-            // Belirtilen kullanıcının postlarını alma
+
             const postRef = collection(db, "posts");
             const postQuery = query(postRef, where("uid", "==", userId), orderBy("order"));
             const postSnapshot = await getDocs(postQuery);
-            const posts = postSnapshot.docs.map((doc) => ({
+            const posts = postSnapshot.docs.filter(doc => doc.data().isActive).map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
             setPosts(posts);
         };
 
+
         fetchUserPosts();
-    }, [userId]);
+    }, [userId, posts]);
 
 
     return (
-        <div>
+        <div className="flex items-center justify-center mt-20 ">
             {userNotFound ? (
                 <p>User not found</p>
             ) : (
-                <>
-                    <h1>Posts for {formattedUsername}</h1>
+                <div className="container flex  flex-col items-center justify-start gap-5 mt-3 mb-20 ">
+                    <div className='menu-trigger'>
+                        <span >{formattedUsername.charAt(0).toUpperCase()} </span>
+                    </div>
                     {posts.map((post) => (
-                        <div key={post.id}>
-                            {post.url && ( // post.url mevcut ise
-                                post.isPdf ? (
-                                    <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
-                                ) : (
-                                    <img src={post.url} alt={post.title} height="500" width="500" />
-                                )
+                        <div key={post.id} className="">
+                            {post.content && (
+                                <div>
+                                    <h1 className="font-bold text-2xl bg-red-200 p-4 px-48 rounded-full">
+                                        {post.content}
+                                    </h1>
+                                </div>
                             )}
-                            <div>
-                                <h2>
-                                    {post.content}
-                                </h2>
-                            </div>
+                            {post.url && (
+                                <div>
+                                    {post.isPdf ? (
+                                        <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+                                    ) : (
+                                        <img className="rounded-3xl" src={post.url} alt={post.title} height="400" width="400" />
+                                    )}
+                                </div>
+                            )}
                         </div>
                     ))}
-                </>
+                </div>
             )}
         </div>
     );

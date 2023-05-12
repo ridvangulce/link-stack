@@ -45,11 +45,12 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
             } catch (error) {
                 console.log("Error getting documents: ", error);
             }
+            console.log("test");
         };
 
         fetchPosts();
     }, [handleDragEnd, handleToggle]);
-
+  
     return (
         <section>
             <div className="post-list">
@@ -74,7 +75,7 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                                         <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
 
                                     ) : (
-                                        <img src={post.url} alt={post.title} height="500px" width="300px" />
+                                        <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="300px" />
                                     )
                                 )}
                                 <div>

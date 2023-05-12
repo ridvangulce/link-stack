@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../UserContext';
 import { signOut } from "firebase/auth"
 import { auth } from '../../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { SiLinktree } from 'react-icons/si';
 import { BiImages } from 'react-icons/bi';
 import "./Header.css"
@@ -12,6 +12,7 @@ import "./Header.css"
 const Header = () => {
     const { userInfo = {}, setUserInfo } = useContext(UserContext)
     const [open, setOpen] = useState(false);
+    const location = useLocation();
 
     let menuRef = useRef();
 
@@ -77,8 +78,14 @@ const Header = () => {
                                 <span className="logo"><SiLinktree />
                                 </span>
                             </Link>
-                            
-                            
+
+
+
+                        </div>
+                        <div className='flex justify-center items-center text-3xl font-mono font-bold'>
+                            <Link to='/'>
+                                <span><h1>LinkStack</h1></span>
+                            </Link>
                         </div>
 
                         <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
@@ -102,17 +109,31 @@ const Header = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className='nav-right'>
+                    <div className='flex items-center justify-between mx-20 bg-emerald-700 rounded-full'>
+
                         <Link to='/'>
                             <div className='menu-trigger'>
-                                <span className="logo"><SiLinktree />
-                                </span>
+                                <span className="logo float-left"><SiLinktree /></span>
                             </div>
                         </Link>
-                        <div className="form-route">
-                            <Link to='/login'>Login</Link>
-                            <Link to='/register'>Register</Link>
+
+                        <div className='flex justify-center items-center text-3xl font-mono font-bold'>
+                            <Link to='/'>
+                                <span><h1>LinkStack</h1></span>
+                            </Link>
                         </div>
+
+                        {location.pathname === '/register' ? (
+
+                            <Link className='bg-red-200 rounded-full p-5 w-38 font-extrabold text-lg font-sans' to='/login'>
+                                Sign In
+                            </Link>
+                        ) : (
+                            
+                            <Link className='bg-red-200 rounded-full p-5 w-38 font-extrabold text-lg font-sans' to='/register'>
+                                Sign Up
+                            </Link>
+                        )}
                     </div>
                 )}
             </nav>
