@@ -82,9 +82,9 @@ const Header = () => {
 
 
                         </div>
-                        <div className='flex justify-center items-center text-3xl font-mono font-bold'>
+                        <div className='flex justify-center items-center text-sm font-mono font-semibold md:text-3xl md:font-bold border-2 border-solid rounded-full bg-gradient-to-r from-transparent to-gray-300 p-2'>
                             <Link to='/'>
-                                <span><h1>LinkStack</h1></span>
+                                <span ><h1>LinkStack</h1></span>
                             </Link>
                         </div>
 
@@ -109,15 +109,15 @@ const Header = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className='flex items-center justify-between mx-20 bg-emerald-700 rounded-full'>
+                    <div className='flex items-center justify-between md:mx-20 bg-emerald-700 rounded-full'>
 
                         <Link to='/'>
                             <div className='menu-trigger'>
-                                <span className="logo float-left"><SiLinktree /></span>
+                                <span className="logo float-left drop-shadow-2xl"><SiLinktree /></span>
                             </div>
                         </Link>
 
-                        <div className='flex justify-center items-center text-3xl font-mono font-bold'>
+                        <div className='flex justify-center items-center text-md font-mono font-semibold md:text-3xl md:font-bold '>
                             <Link to='/'>
                                 <span><h1>LinkStack</h1></span>
                             </Link>
@@ -125,12 +125,12 @@ const Header = () => {
 
                         {location.pathname === '/register' ? (
 
-                            <Link className='bg-red-200 rounded-full p-5 w-38 font-extrabold text-lg font-sans' to='/login'>
+                            <Link className='bg-red-200 rounded-full p-5 w-38 font-semibold text-sm font-sans md:text-bold md:font-extrabold' to='/login'>
                                 Sign In
                             </Link>
                         ) : (
                             
-                            <Link className='bg-red-200 rounded-full p-5 w-38 font-extrabold text-lg font-sans' to='/register'>
+                            <Link className='bg-red-200 rounded-full p-5 w-38 font-semibold text-md font-sans md:text-lg md:font-bold' to='/register'>
                                 Sign Up
                             </Link>
                         )}

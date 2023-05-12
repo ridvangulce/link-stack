@@ -63,29 +63,29 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                     </div>
                 )}
                 {!postNotFound && (
-                    <>
+                    <div className="flex flex-col items-center justify-center px-3 pb-3 border-black border-solid border-4 rounded-3xl bg-gradient-to-r from-transparent to-blue-500 h-max">
                         <div className='menu-trigger'>
                             <span>{userInfo && userInfo.username ? userInfo.username.charAt(0).toUpperCase() : null} </span>
                         </div>
-                        <h2>@{userInfo.username}</h2>
+                        <h1 className="font-bold text-lg mb-5">@{userInfo.username}</h1>
                         {posts.map((post) => (
-                            <div key={post.id}>
+                            <div key={post.id} className="mb-3">
                                 {post.url && ( // post.url mevcut ise
                                     post.isPdf ? (
-                                        <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
+                                        <iframe src={post.url} width="200px" height="200px" style={{ overflow: "hidden" }} />
 
                                     ) : (
                                         <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="300px" />
                                     )
                                 )}
                                 <div>
-                                    <h1 className="font-bold">
+                                    <h1 className="font-bold text-md bg-red-200 rounded-full">
                                         {post.content}
                                     </h1>
                                 </div>
                             </div>
                         ))}
-                    </>
+                    </div>
                 )}
             </div>
         </section>

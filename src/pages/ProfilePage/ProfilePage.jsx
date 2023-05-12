@@ -66,19 +66,22 @@ const ProfilePage = () => {
 
 
     return (
-        <div className="flex items-center justify-center mt-20 ">
+        <div className="flex flex-col items-center justify-center px-3 p-3 rounded-3xl bg-gradient-to-r from-transparent to-blue-500">
             {userNotFound ? (
                 <p>User not found</p>
             ) : (
-                <div className="container flex  flex-col items-center justify-start gap-5 mt-3 mb-20 ">
+                <div className="container flex  flex-col items-center justify-start gap-5 mb-5 drop-shadow-2xl ">
                     <div className='menu-trigger'>
                         <span >{formattedUsername.charAt(0).toUpperCase()} </span>
+                    </div>
+                    <div>
+                        <h1 className="font-bold text-2xl mb-6 drop-shadow-2xl">@{formattedUsername} </h1>
                     </div>
                     {posts.map((post) => (
                         <div key={post.id} className="">
                             {post.content && (
                                 <div>
-                                    <h1 className="font-bold text-2xl bg-red-200 p-4 px-48 rounded-full">
+                                    <h1 className="font-bold text-2xl text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4 px-48 rounded-full">
                                         {post.content}
                                     </h1>
                                 </div>

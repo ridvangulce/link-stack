@@ -29,6 +29,7 @@ const Post = () => {
   const [content, setContent] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [postOpen, setPostOpen] = useState(false);
+  const [title, setTitle] = useState("");
 
   const inputRef = useRef(null);
 
@@ -188,8 +189,10 @@ const Post = () => {
                           ) : (
                             <div >
                               {post.url && post.isPdf ? (
-                                <iframe src={post.url} width="100%" height="500px"
-                                />
+                                <div className="flex flex-col items-center justify-center">
+                                  <input className="bg-gradient-to-tr font-bold text-black text-center drop-shadow-xl border rounded-full w-full h-10 mb-5 placeholder:italic placeholder:text-black placeholder:font-bold" placeholder="Header" type="text" />
+                                  <iframe src={post.url} width="100%" height="500px" />
+                                </div>
                               ) : (
                                 post.url && <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px " />
                               )}
