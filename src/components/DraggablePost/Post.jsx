@@ -64,7 +64,6 @@ const Post = () => {
 
     return () => {
       unsubscribe();
-      // Aboneliklerinizi burada iptal edebilirsiniz
     };
   }, []);
 
@@ -75,17 +74,54 @@ const Post = () => {
   };
 
   const handleSubmit = async (post) => {
-    if (!content || editingId !== post.id) return;
+    const trimmedContent = content.trim();
+    let updatedContent = trimmedContent || post.content || 'Header';
+
+    if (editingId !== post.id) {
+      updatedContent = post.content || 'Header';
+    }
 
     const updatedPost = {
       ...post,
-      content
+      content: updatedContent
     };
 
     await updateDoc(doc(db, "posts", post.id), updatedPost);
 
     setContent("");
     setEditingId(null);
+  };
+  const handleTitleChange = async (e, postId) => {
+    const newTitle = e.target.value;
+    const trimmedTitle = newTitle.trim();
+    const updatedTitle = trimmedTitle || 'Header';
+
+    if (!updatedTitle) {
+      // Eğer güncellenmiş başlık boş ise, input alanını temizle
+      setContent('');
+      return;
+    }
+
+    // Güncellenmiş başlık verisini Firestore'a yaz
+    await updateDoc(doc(db, "posts", postId), { title: updatedTitle });
+  };
+
+
+
+  const handleBlur = (post) => {
+    handleSubmit(post);
+  };
+
+  const handleClickOutside = (event) => {
+    if (inputRef.current && !inputRef.current.contains(event.target)) {
+      handleSubmit(posts.find((post) => post.id === editingId));
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit(posts.find((post) => post.id === editingId));
+    }
   };
 
   const handleDelete = async (id) => {
@@ -117,31 +153,18 @@ const Post = () => {
     setPosts(updatedPosts);
   };
 
-  const handleTitleChange = async (e, postId) => {
-    const newTitle = e.target.value;
 
-    // Güncellenmiş başlık verisini Firestore'a yaz
-    await updateDoc(doc(db, "posts", postId), { title: newTitle });
-  };
-
-
-  const handleBlur = (post) => {
-    handleSubmit(post);
-  };
-
-  const handleClickOutside = (event) => {
-    if (inputRef.current && !inputRef.current.contains(event.target)) {
-      handleSubmit(posts.find((post) => post.id === editingId));
-    }
-  };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
 
   const handleToggle = async (post) => {
     const updatedPost = {
@@ -186,7 +209,6 @@ const Post = () => {
                         <div className=" col-start-1 col-span-3 lg:col-start-2 lg:col-span-2 items-center justify-center pr-20">
                           {editingId === post.id ? (
                             <div onBlur={() => handleBlur(post)}>
-
                               <div>
                                 <input className="w-full font-bold focus:outline-none " ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
                               </div>
@@ -195,13 +217,16 @@ const Post = () => {
                             <div >
                               {
                                 post.title && (
-                                  <input
-                                    className="bg-gradient-to-tr font-bold text-black text-center drop-shadow-xl border rounded-full w-full h-10 mb-5 placeholder:italic placeholder:text-black placeholder:font-bold"
-                                    placeholder={post.title}
-                                    type="text"
-                                    value={post.title}
-                                    onChange={(e) => handleTitleChange(e, post.id)}
-                                  />
+                                  <div onBlur={() => handleBlur(post.title)}>
+                                    <input
+                                      className="bg-gradient-to-tr font-bold text-black text-center drop-shadow-xl border rounded-full w-full h-10 mb-5 placeholder:italic placeholder:text-black placeholder:font-bold"
+                                      placeholder={post.title}
+                                      type="text"
+                                      value={post.title}
+                                      onChange={(e) => handleTitleChange(e, post.id)}
+                                      autoFocus
+                                    />
+                                  </div>
                                 )
                               }
 
