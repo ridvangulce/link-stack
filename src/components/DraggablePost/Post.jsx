@@ -171,39 +171,92 @@ const Post = () => {
                         <div className="drag-icon items-center justify-start hidden lg:flex">
                           <FaGripLines className="text-gray-400" />
                         </div>
+
+
+
                         <div className=" col-start-1 col-span-3 lg:col-start-2 lg:col-span-2 items-center justify-center pr-20">
                           {editingId === post.id ? (
-                            <div onBlur={() => handleBlur(post)}>
 
-                              <div>
-                                <input className="w-full font-bold focus:outline-none " ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+                            /*
+                          -------------------   EDIT MODE ON! -------------------
+                            */
+
+                            <div onBlur={() => handleBlur(post)}>
+                              <div className="items-center justify-center">
+
+                                {/*
+                                    -------------------   PDF! -------------------
+                                */}
+
+                                {post.url && post.isPdf ? (
+                                  <div className="flex flex-col items-center justify-center">
+                                    <input className="w-full font-bold focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+                                    <iframe src={post.url} width="100%" height="500px" />
+                                  </div>
+                                ) : post.url && !post.isPdf ? (
+
+                                  /*
+                                   -------------------   IMAGES! -------------------
+                                  
+                                   */
+
+                                  <div className="items-center justify-center">
+                                    <p className=" flex items-center justify-center bg-gradient-to-tr font-bold text-black text-center border rounded-full w-full h-10  mb-5 placeholder:italic placeholder:text-black placeholder:font-bold">
+                                      <input className=" items-center justify-center focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+                                    </p>
+                                    <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px" />
+                                  </div>
+                                ) :
+
+                                  /*
+                                    -------------------   Content! -------------------
+                                   
+                                    */
+
+                                  <input className="w-full font-bold focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+
+                                }
                               </div>
                             </div>
+
+                            /*
+                                 -------------------   EDIT MODE OFF! -------------------
+                            */
+
                           ) : (
                             <div >
-                              {
-                                post.title && (
-                                  <input
-                                    className="bg-gradient-to-tr font-bold text-black text-center drop-shadow-xl border rounded-full w-full h-10 mb-5 placeholder:italic placeholder:text-black placeholder:font-bold"
-                                    placeholder={post.title}
-                                    type="text"
-                                    value={post.title}
-                                    onChange={(e) => handleTitleChange(e, post.id)}
-                                  />
-                                )
-                              }
-
                               {post.url && post.isPdf ? (
+
+                                /*
+                                    -------------------   PDF! -------------------
+                                */
+
                                 <div className="flex flex-col items-center justify-center">
+                                  <p className="text-center border rounded-full py-2 w-full mb-5 " onClick={() => handleEditClick(post)}>
+                                    <h2 className="font-bold">{post.content}</h2>
+                                  </p>
                                   <iframe src={post.url} width="100%" height="500px" />
                                 </div>
                               ) : (
                                 post.url &&
-                                <div>
+
+                                /*
+                                    -------------------   IMAGES! -------------------
+                                */
+
+                                <div className="flex flex-col items-center justify-center ">
+                                  <p className="text-center border rounded-full py-2 w-full mb-5 " onClick={() => handleEditClick(post)}>
+                                    <h2 className="font-bold">{post.content}</h2>
+                                  </p>
                                   <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px " />
                                 </div>
                               )}
                               {!post.url && (
+
+                                /*
+                                    -------------------   CONTENT! -------------------
+                                */
+
                                 <div>
                                   <p className="cursor-pointer items-center justify-center" onClick={() => handleEditClick(post)}>
                                     <h2 className="font-bold flex-nowrap ">{post.content}</h2>

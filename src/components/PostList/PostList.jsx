@@ -80,7 +80,7 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                         <h1 className="font-bold text-lg mb-5">@{userInfo.username}</h1>
                         {posts.map((post) => (
                             <div key={post.id} className="">
-                                {post.content && (
+                                {post.content && !post.url&& (
                                     <div>
                                         <h1 className="font-bold text-xs w-56 h-10 mb-3 text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4  rounded-full flex items-center justify-center">
                                             {post.content}
@@ -94,7 +94,7 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                                                 className="font-bold text-xs w-56 h-10 mb-3 text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4  rounded-full hover:cursor-pointer flex items-center justify-center bg-red-500"
                                                 onClick={() => handlePostTitleClick(post.id)}
                                             >
-                                                {post.title}
+                                                {post.content}
                                             </h1>
                                         </div>
                                         {post.isOpen && (

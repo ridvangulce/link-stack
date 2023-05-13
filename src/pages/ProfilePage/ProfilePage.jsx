@@ -88,7 +88,7 @@ const ProfilePage = () => {
                     </div>
                     {posts.map((post) => (
                         <div key={post.id} className="">
-                            {post.content && (
+                            {post.content &&!post.url&& (
                                 <div>
                                     <h1 className="font-bold text-sm p-2 px-12 md:p-4 md:px-48 justify-items-center items-center text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl  rounded-full whitespace-nowrap">
                                         {post.content}
@@ -102,7 +102,7 @@ const ProfilePage = () => {
                                             className="font-bold text-sm p-2 px-12 md:p-4 md:px-48 justify-items-center justify-center text-white bg-gradient-to-r from-red-400 to-black  drop-shadow-2xl  rounded-full hover:cursor-pointer flex items-center justify-cente"
                                             onClick={() => handlePostTitleClick(post.id)}
                                         >
-                                            {post.title}
+                                            {post.content}
                                         </h1>
                                     </div>
                                     {post.isOpen && (
