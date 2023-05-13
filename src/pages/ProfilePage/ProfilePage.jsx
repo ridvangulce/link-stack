@@ -75,7 +75,7 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center px-3 p-3 rounded-3xl bg-gradient-to-r from-transparent to-blue-500">
+        <div className="flex flex-col items-center justify-start px-3 p-3 rounded-3xl bg-gradient-to-r from-transparent to-blue-500 h-screen overflow-y-auto">
             {userNotFound ? (
                 <p>User not found</p>
             ) : (
@@ -90,7 +90,7 @@ const ProfilePage = () => {
                         <div key={post.id} className="">
                             {post.content && (
                                 <div>
-                                    <h1 className="font-bold text-2xl text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4 px-48 rounded-full">
+                                    <h1 className="font-bold text-sm p-2 px-12 md:p-4 md:px-48 justify-items-center items-center text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl  rounded-full whitespace-nowrap">
                                         {post.content}
                                     </h1>
                                 </div>
@@ -99,7 +99,7 @@ const ProfilePage = () => {
                                 <div>
                                     <div>
                                         <h1
-                                            className="font-bold text-2xl text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4 px-48 rounded-full hover:cursor-pointer flex items-center justify-center bg-red-500"
+                                            className="font-bold text-sm p-2 px-12 md:p-4 md:px-48 justify-items-center justify-center text-white bg-gradient-to-r from-red-400 to-black  drop-shadow-2xl  rounded-full hover:cursor-pointer flex items-center justify-cente"
                                             onClick={() => handlePostTitleClick(post.id)}
                                         >
                                             {post.title}

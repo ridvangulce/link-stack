@@ -29,7 +29,6 @@ const Post = () => {
   const [content, setContent] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [postOpen, setPostOpen] = useState(false);
-
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -43,7 +42,6 @@ const Post = () => {
           email: user.email,
           photoURL: user.photoURL
         });
-
         const postsQuery = query(
           collection(db, "posts"),
           where("uid", "==", user.uid),
@@ -61,7 +59,6 @@ const Post = () => {
         setPosts([]);
       }
     });
-
     return () => {
       unsubscribe();
     };
@@ -76,32 +73,25 @@ const Post = () => {
   const handleSubmit = async (post) => {
     const trimmedContent = content.trim();
     let updatedContent = trimmedContent || post.content || 'Header';
-
     if (editingId !== post.id) {
       updatedContent = post.content || 'Header';
     }
-
     const updatedPost = {
       ...post,
       content: updatedContent
     };
-
     await updateDoc(doc(db, "posts", post.id), updatedPost);
-
     setContent("");
     setEditingId(null);
   };
-const handleTitleChange = async (e, postId) => {
+
+  const handleTitleChange = async (e, postId) => {
     const newTitle = e.target.value;
     const trimmedTitle = newTitle.trim();
     const updatedTitle = trimmedTitle || 'Header';
-  
     if (!updatedTitle) return;
-  
-    // Güncellenmiş başlık verisini Firestore'a yaz
     await updateDoc(doc(db, "posts", postId), { title: updatedTitle });
   };
-  
 
   const handleBlur = (post) => {
     handleSubmit(post);
@@ -119,34 +109,24 @@ const handleTitleChange = async (e, postId) => {
 
   const handleDragEnd = async (result) => {
     if (!result.destination) return;
-
     const newPosts = Array.from(posts);
     const [reorderedItem] = newPosts.splice(result.source.index, 1);
     newPosts.splice(result.destination.index, 0, reorderedItem);
-
-    // Yeniden hesaplanmış sıralama değerlerini oluştur
     const updatedPosts = newPosts.map((post, index) => ({
       ...post,
       order: index,
     }));
-
-    // Sıralama bilgisini Firestore'a yaz
     const batch = writeBatch(db);
     updatedPosts.forEach((post) => {
       const ref = doc(db, "posts", post.id);
       batch.update(ref, post);
     });
     await batch.commit();
-
-    // PostList componentinin yeniden render edilmesi için setPosts fonksiyonunu çağıralım
     setPosts(updatedPosts);
   };
 
-  
-
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -157,12 +137,11 @@ const handleTitleChange = async (e, postId) => {
       ...post,
       isActive: !post.isActive
     };
-
     await updateDoc(doc(db, "posts", post.id), updatedPost);
   };
+
   const changePostState = () => {
     setPostOpen(!postOpen);
-
   }
 
   if (!user || !user.uid) return <LoginPage />;
