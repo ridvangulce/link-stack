@@ -190,7 +190,7 @@ const Post = () => {
 
                                 {post.url && post.isPdf ? (
                                   <div className="flex flex-col items-center justify-center">
-                                    <input className="w-full font-bold focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+                                    <input className="w-full text-center font-bold focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
                                     <iframe src={post.url} width="100%" height="500px" />
                                   </div>
                                 ) : post.url && !post.isPdf ? (
@@ -202,7 +202,7 @@ const Post = () => {
 
                                   <div className="items-center justify-center">
                                     <p className=" flex items-center justify-center bg-gradient-to-tr font-bold text-black text-center border rounded-full w-full h-10  mb-5 placeholder:italic placeholder:text-black placeholder:font-bold">
-                                      <input className=" items-center justify-center focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+                                      <input className=" text-center focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
                                     </p>
                                     <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px" />
                                   </div>
@@ -213,7 +213,7 @@ const Post = () => {
                                    
                                     */
 
-                                  <input className="w-full font-bold focus:outline-none" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+                                  <input className="w-full font-bold focus:outline-none text-center" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
 
                                 }
                               </div>
@@ -232,9 +232,12 @@ const Post = () => {
                                 */
 
                                 <div className="flex flex-col items-center justify-center">
-                                  <p className="text-center border rounded-full py-2 w-full mb-5 " onClick={() => handleEditClick(post)}>
-                                    <h2 className="font-bold">{post.content}</h2>
-                                  </p>
+                                  <div className="flex cursor-pointer  border rounded-full w-full h-10 mb-3 items-center justify-center" onClick={() => handleEditClick(post)}>
+                                    <h2 className="font-bold flex nowrap ">{post.content} </h2>
+                                    <span>
+                                      <BsPencil />
+                                    </span>
+                                  </div>
                                   <iframe src={post.url} width="100%" height="500px" />
                                 </div>
                               ) : (
@@ -245,9 +248,13 @@ const Post = () => {
                                 */
 
                                 <div className="flex flex-col items-center justify-center ">
-                                  <p className="text-center border rounded-full py-2 w-full mb-5 " onClick={() => handleEditClick(post)}>
-                                    <h2 className="font-bold">{post.content}</h2>
-                                  </p>
+                                  <div className="flex cursor-pointer  border rounded-full w-full h-10 mb-3 items-center justify-center" onClick={() => handleEditClick(post)}>
+                                    <h2 className="font-bold flex nowrap ">{post.content} </h2>
+                                    <span>
+                                      <BsPencil />
+                                    </span>
+                                  </div>
+
                                   <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px " />
                                 </div>
                               )}
@@ -258,9 +265,12 @@ const Post = () => {
                                 */
 
                                 <div>
-                                  <p className="cursor-pointer items-center justify-center" onClick={() => handleEditClick(post)}>
-                                    <h2 className="font-bold flex-nowrap ">{post.content}</h2>
-                                  </p>
+                                  <div className="flex cursor-pointer items-center justify-center" onClick={() => handleEditClick(post)}>
+                                    <h2 className="font-bold flex nowrap ">{post.content} </h2>
+                                    <span>
+                                      <BsPencil />
+                                    </span>
+                                  </div>
                                 </div>
                               )}
 

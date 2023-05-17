@@ -9,6 +9,8 @@ import {
     orderBy,
     where
 } from "firebase/firestore";
+import { BsPencil, BsFillTrash3Fill } from "react-icons/bs";
+
 const Posts = () => {
     const [userNotFound, setUserNotFound] = useState(false);
     const [userId, setUserId] = useState("");
