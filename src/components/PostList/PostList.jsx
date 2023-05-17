@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./PostList.css";
 import { UserContext } from "../../UserContext";
 import { db, auth } from "../../firebase";
+import ProfilePage from "../../pages/ProfilePage/ProfilePage";
 import {
     collection,
     getDocs,
@@ -11,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import Posts from "../Posts/Posts";
 const PostList = ({ handleDragEnd, handleToggle }) => {
     const [posts, setPosts] = useState([]);
     const [userNotFound, setUserNotFound] = useState(false);
@@ -82,7 +84,7 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                             <div key={post.id} className="">
                                 {post.content && !post.url&& (
                                     <div>
-                                        <h1 className="font-bold text-xs w-56 h-10 mb-3 text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl p-4  rounded-full flex items-center justify-center">
+                                        <h1 className="font-bold text-xs w-56 h-10 mb-3 bg-white bg-opacity-10 text-black drop-shadow-2xl p-4  rounded-xl flex items-center justify-center">
                                             {post.content}
                                         </h1>
                                     </div>

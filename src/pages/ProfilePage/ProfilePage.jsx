@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import PostList from "../../components/PostList/PostList";
+import Posts from "../../components/Posts/Posts";
 
 const ProfilePage = () => {
     const [userNotFound, setUserNotFound] = useState(false);
@@ -62,17 +63,7 @@ const ProfilePage = () => {
         fetchUserPosts();
     }, [userId]);
 
-    const handlePostTitleClick = (postId) => {
-        setPosts(prevPosts => prevPosts.map(post => {
-            if (post.id === postId) {
-                return {
-                    ...post,
-                    isOpen: !post.isOpen, // Durumu tersine çevir
-                };
-            }
-            return post;
-        }));
-    };
+
 
     return (
         <div className="flex flex-col items-center justify-start px-3 p-3 rounded-3xl bg-gradient-to-r from-transparent to-blue-500 h-screen overflow-y-auto">
@@ -84,40 +75,9 @@ const ProfilePage = () => {
                         <span >{formattedUsername.charAt(0).toUpperCase()} </span>
                     </div>
                     <div>
-                        <h1 className="font-bold text-2xl mb-6 drop-shadow-2xl">@{formattedUsername} </h1>
+                        <h1 className="font-bold text-2xl mb-6 drop-shadow-2xl">@{formattedUsername.toLowerCase()} </h1>
                     </div>
-                    {posts.map((post) => (
-                        <div key={post.id} className="">
-                            {post.content &&!post.url&& (
-                                <div>
-                                    <h1 className="font-bold text-sm p-2 px-12 md:p-4 md:px-48 justify-items-center items-center text-white bg-gradient-to-r from-gray-400 to-gray-700 drop-shadow-2xl  rounded-full whitespace-nowrap">
-                                        {post.content}
-                                    </h1>
-                                </div>
-                            )}
-                            {post.url && (
-                                <div>
-                                    <div>
-                                        <h1
-                                            className="font-bold text-sm p-2 px-12 md:p-4 md:px-48 justify-items-center justify-center text-white bg-gradient-to-r from-red-400 to-black  drop-shadow-2xl  rounded-full hover:cursor-pointer flex items-center justify-cente"
-                                            onClick={() => handlePostTitleClick(post.id)}
-                                        >
-                                            {post.content}
-                                        </h1>
-                                    </div>
-                                    {post.isOpen && (
-                                        <div>
-                                            {post.isPdf ? (
-                                                <iframe src={post.url} width="100%" height="500px" style={{ overflow: "hidden" }} />
-                                            ) : (
-                                                <img className="rounded-3xl" src={post.url} alt={post.title} height="400" width="400" />
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                    <Posts />
                 </div>
             )}
         </div>
