@@ -5,7 +5,7 @@ import { db, storage } from '../../firebase';
 import { FaGoogleDrive } from "react-icons/fa";
 import { getAuth } from 'firebase/auth';
 import "./DrivePage.css"
-const DrivePage = () => {
+const DrivePage = ({changePostState}) => {
     const [fileUrl, setFileUrl] = useState(null);
     const [selectedFileUrl, setSelectedFileUrl] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -64,6 +64,7 @@ const DrivePage = () => {
                         };
                         await addDoc(collection(db, "posts"), postData);
                         setIsUploaded(true);
+                        changePostState()
                     } catch (error) {
                         console.log("ERRORRR!", error);
                     }

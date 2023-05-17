@@ -4,7 +4,7 @@ import { db } from '../../firebase';
 import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
-const DirectPost = () => {
+const DirectPost = ({ changePostState }) => {
     const auth = getAuth();
     const user = auth.currentUser;
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const DirectPost = () => {
             uid: user.uid,
             order: newOrder,
             isActive: false,
-            direct: url
+            directUrl: url
         };
 
         await addDoc(collection(db, "posts"), postData);
@@ -65,7 +65,12 @@ const DirectPost = () => {
     return (
         <div className='flex'>
             <input className='border my-3 w-full text-center font-semibold rounded-full' type="text" placeholder='Enter URL' value={url} onChange={handleUrlChange} />
-            <button className={`${isUrlValid ? " bg-violet-800 text-white " : "bg-red-200 text-red-400"}  font-bold rounded-3xl p-5 ml-4`} onClick={handleDirectClick} disabled={!isUrlValid}>
+            <button className={`${isUrlValid ? " bg-violet-800 text-white " : "bg-red-200 text-red-400"}  font-bold rounded-3xl p-5 ml-4`}
+                onClick={() => {
+                    handleDirectClick()
+                    changePostState()                    
+                }}
+                disabled={!isUrlValid}>
                 Add Link
             </button>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { db, auth } from "../../firebase";
 import { UserContext } from "../../UserContext";
@@ -9,7 +10,7 @@ import {
     orderBy,
     where
 } from "firebase/firestore";
-import { BsPencil, BsFillTrash3Fill } from "react-icons/bs";
+
 
 const Posts = () => {
     const [userNotFound, setUserNotFound] = useState(false);
@@ -76,12 +77,22 @@ const Posts = () => {
         <>
             {posts.map((post) => (
                 <div key={post.id} className="">
-                    {post.content && !post.url && (
+                    {post.content && !post.url && !post.directUrl && (
                         <div>
                             <h1 className=" font-extrabold text-lg bg-opacity-10 bg-white text-black p-2 px-12 md:p-4 md:px-48 justify-items-center items-center drop-shadow-2xl  rounded-xl whitespace-nowrap">
                                 {post.content}
                             </h1>
                         </div>
+                    )}
+                    {post.directUrl && (
+                        <div>
+                            <Link to={post.directUrl} target="_blank" rel="noopener noreferrer">
+                                <h1 className=" font-extrabold text-lg bg-opacity-10 bg-white text-black p-2 px-12 md:p-4 md:px-48 justify-items-center items-center drop-shadow-2xl  rounded-xl whitespace-nowrap hover:bg-white transition duration-300">
+                                    {post.content}
+                                </h1>
+                            </Link>
+                        </div>
+
                     )}
                     {post.url && (
                         <div>
@@ -93,6 +104,7 @@ const Posts = () => {
                                     {post.content}
                                 </h1>
                             </div>
+
                             {post.isOpen && (
                                 <div>
                                     {post.isPdf ? (

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import PostList from "../PostList/PostList";
 import AddPost from "../AddPost/AddPost";
-import DrivePage from "../../pages/DrivePage/DrivePage";
+import Links from "../Links/Links";
 import "./Post.css";
 import { db } from "../../firebase";
 import {
@@ -24,7 +24,6 @@ import { FaGripLines } from "react-icons/fa";
 import { BsPencil, BsFillTrash3Fill } from "react-icons/bs";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import Links from "../Links/Links";
 
 const Post = () => {
   const [user, setUser] = useState(null);
@@ -156,7 +155,7 @@ const Post = () => {
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  w-full h-auto md:w-1/3 " onClick={changePostState}>Add Link</button>
         </div>
         <div className={`add-section ${postOpen ? "open blur-0 opacity-0" : ""} `}>
-          {postOpen && <Links />}
+          {postOpen && <Links changePostState={changePostState} />}
         </div>
         <div>
           <AddPost />
@@ -209,14 +208,14 @@ const Post = () => {
                                     </p>
                                     <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px" />
                                   </div>
-                                ) :
+                                ) : !post.url &&
 
-                                  /*
-                                    -------------------   Content! -------------------
-                                   
-                                    */
+                                /*
+                                  -------------------   Content! -------------------
+                                 
+                                  */
 
-                                  <input className="w-full font-bold focus:outline-none text-center" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
+                                <input className="w-full font-bold focus:outline-none text-center" ref={inputRef} defaultValue={content} onChange={(e) => setContent(e.target.value)} autoFocus />
 
                                 }
                               </div>
@@ -227,15 +226,16 @@ const Post = () => {
                             */
 
                           ) : (
-                            <div >
+                            <div>
                               {post.url && post.isPdf ? (
-
                                 /*
-                                    -------------------   PDF! -------------------
+                                  -------------------   PDF! -------------------
                                 */
-
                                 <div className="flex flex-col items-center justify-center">
-                                  <div className="flex cursor-pointer  border rounded-full w-full h-10 mb-3 items-center justify-center" onClick={() => handleEditClick(post)}>
+                                  <div
+                                    className="flex cursor-pointer border rounded-full w-full h-10 mb-3 items-center justify-center"
+                                    onClick={() => handleEditClick(post)}
+                                  >
                                     <h2 className="font-bold flex nowrap ">{post.content} </h2>
                                     <span>
                                       <BsPencil />
@@ -243,32 +243,59 @@ const Post = () => {
                                   </div>
                                   <iframe src={post.url} width="100%" height="500px" />
                                 </div>
-                              ) : (
-                                post.url &&
-
+                              ) : post.url ? (
                                 /*
-                                    -------------------   IMAGES! -------------------
+                                  -------------------   IMAGES! -------------------
                                 */
-
-                                <div className="flex flex-col items-center justify-center ">
-                                  <div className="flex cursor-pointer  border rounded-full w-full h-10 mb-3 items-center justify-center" onClick={() => handleEditClick(post)}>
+                                <div className="flex flex-col items-center justify-center">
+                                  <div
+                                    className="flex cursor-pointer border rounded-full w-full h-10 mb-3 items-center justify-center"
+                                    onClick={() => handleEditClick(post)}
+                                  >
                                     <h2 className="font-bold flex nowrap ">{post.content} </h2>
                                     <span>
                                       <BsPencil />
                                     </span>
                                   </div>
-
-                                  <img className="rounded-3xl" src={post.url} alt={post.title} height="500px" width="500px " />
+                                  <img
+                                    className="rounded-3xl"
+                                    src={post.url}
+                                    alt={post.title}
+                                    height="500px"
+                                    width="500px"
+                                  />
                                 </div>
-                              )}
-                              {!post.url && (
-
+                              ) : post.directUrl ? (
                                 /*
-                                    -------------------   CONTENT! -------------------
+                                  -------------------   DIRECT URL! -------------------
                                 */
-
                                 <div>
-                                  <div className="flex cursor-pointer items-center justify-center" onClick={() => handleEditClick(post)}>
+                                  <div
+                                    className="flex cursor-pointer items-center justify-center"
+                                    onClick={() => handleEditClick(post)}
+                                  >
+                                    <h2 className="font-bold flex nowrap ">{post.content} </h2>
+                                    <span>
+                                      <BsPencil />
+                                    </span>
+                                  </div>
+                                  <div
+                                    className="flex cursor-pointer items-center justify-center"
+                                    onClick={() => handleEditClick(post)}
+                                  >
+                                    <h2 className=" font-bold text-violet-900 font-mono flex nowrap ">{post.directUrl} </h2>
+
+                                  </div>
+                                </div>
+                              ) : (
+                                /*
+                                  -------------------   CONTENT! -------------------
+                                */
+                                <div>
+                                  <div
+                                    className="flex cursor-pointer items-center justify-center"
+                                    onClick={() => handleEditClick(post)}
+                                  >
                                     <h2 className="font-bold flex nowrap ">{post.content} </h2>
                                     <span>
                                       <BsPencil />
@@ -276,8 +303,8 @@ const Post = () => {
                                   </div>
                                 </div>
                               )}
-
                             </div>
+
                           )}
                         </div>
                         <div className="col-start-4 lg:flex lg:flex-col justify-center items-start">

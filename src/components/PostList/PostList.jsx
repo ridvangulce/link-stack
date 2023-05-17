@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import "./PostList.css";
 import { UserContext } from "../../UserContext";
 import { db, auth } from "../../firebase";
@@ -82,12 +83,22 @@ const PostList = ({ handleDragEnd, handleToggle }) => {
                         <h1 className="font-bold text-lg mb-5">@{userInfo.username}</h1>
                         {posts.map((post) => (
                             <div key={post.id} className="">
-                                {post.content && !post.url&& (
+                                {!post.directUrl && !post.url && post.content && (
                                     <div>
                                         <h1 className="font-bold text-xs w-56 h-10 mb-3 bg-white bg-opacity-10 text-black drop-shadow-2xl p-4  rounded-xl flex items-center justify-center">
                                             {post.content}
                                         </h1>
                                     </div>
+                                )}
+                                {post.directUrl && (
+                                    <div>
+                                        <Link to={post.directUrl} target="_blank" rel="noopener noreferrer">
+                                            <h1 className="font-bold text-xs w-56 h-10 mb-3 bg-white bg-opacity-10 text-black drop-shadow-2xl p-4 rounded-xl flex items-center justify-center hover:bg-white transition duration-300">
+                                                {post.content}
+                                            </h1>
+                                        </Link>
+                                    </div>
+
                                 )}
                                 {post.url && (
                                     <div className="flex flex-col items-center justify-center">
