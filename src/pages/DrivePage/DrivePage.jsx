@@ -45,20 +45,13 @@ const DrivePage = ({changePostState}) => {
 
 
                     try {
-                        const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("order")));
-                        const lastPost = querySnapshot.docs[querySnapshot.docs.length - 1];
-                        let newOrder;
-                        if (lastPost) {
-                            newOrder = lastPost.data().order + 1;
-                        } else {
-                            newOrder = 0;
-                        }
+                      
                         const isPdf = selectedFile.mimeType === "application/pdf";
                         const postData = {
                             time: new Date(),
                             uid: user.uid,
                             url: shareableLink,
-                            order: newOrder,
+                            order: -1,
                             isPdf: isPdf ? true : false,
                             content: "Header"
                         };

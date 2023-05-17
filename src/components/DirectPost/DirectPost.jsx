@@ -14,23 +14,11 @@ const DirectPost = ({ changePostState }) => {
 
     const createNewLink = async () => {
         setIsLoading(true);
-
-        const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("order")));
-        const lastPost = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-        let newOrder;
-
-        if (lastPost) {
-            newOrder = lastPost.data().order + 1;
-        } else {
-            newOrder = 0;
-        }
-
         const postData = {
             content: "Default Content",
             time: new Date(),
             uid: user.uid,
-            order: newOrder,
+            order: -1,
             isActive: false,
             directUrl: url
         };
