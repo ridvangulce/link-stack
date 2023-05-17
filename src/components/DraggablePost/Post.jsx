@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import PostList from "../PostList/PostList";
 import AddPost from "../AddPost/AddPost";
+import DrivePage from "../../pages/DrivePage/DrivePage";
 import "./Post.css";
 import { db } from "../../firebase";
 import {
@@ -21,7 +22,9 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FaGripLines } from "react-icons/fa";
 import { BsPencil, BsFillTrash3Fill } from "react-icons/bs";
+
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Links from "../Links/Links";
 
 const Post = () => {
   const [user, setUser] = useState(null);
@@ -147,13 +150,16 @@ const Post = () => {
   if (!user || !user.uid) return <LoginPage />;
 
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className={`flex flex-col lg:flex-row `}>
       <div className="w-full lg:w-3/4">
-        <div className="flex justify-center items-center m-5">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  w-full h-auto md:w-1/3 " onClick={changePostState}>Add Section</button>
+        <div className={`flex justify-center items-center m-5`}>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  w-full h-auto md:w-1/3 " onClick={changePostState}>Add Link</button>
         </div>
-        <div className={`add-section ${postOpen ? "open" : ""}`}>
-          {postOpen && <AddPost />}
+        <div className={`add-section ${postOpen ? "open blur-0 opacity-0" : ""} `}>
+          {postOpen && <Links />}
+        </div>
+        <div>
+          <AddPost />
         </div>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="posts">
@@ -171,9 +177,6 @@ const Post = () => {
                         <div className="drag-icon items-center justify-start hidden lg:flex">
                           <FaGripLines className="text-gray-400" />
                         </div>
-
-
-
                         <div className=" col-start-1 col-span-3 lg:col-start-2 lg:col-span-2 items-center justify-center pr-20">
                           {editingId === post.id ? (
 
@@ -310,10 +313,6 @@ const Post = () => {
       </div>
     </div>
   );
-
-
-
-
 };
 
 export default Post;

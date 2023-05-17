@@ -1,10 +1,12 @@
+import "./AddPost.css"
 import React, { useState } from 'react';
 import { getAuth } from "firebase/auth";
 import { db } from '../../firebase';
 import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
-import "./AddPost.css"
 import { useNavigate } from 'react-router-dom';
-import DrivePage from '../../pages/DrivePage/DrivePage';
+import { AiOutlineAppstoreAdd } from "react-icons/ai"
+
+
 const AddPost = () => {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -51,18 +53,18 @@ const AddPost = () => {
   };
 
   return (
-      <div className='flex items-center justify-around space-x-5 h-auto'>
-        <div>
-          <button className='bg-blue-300 p-4 items-center rounded-3xl' onClick={handleAddPostClick} disabled={isLoading}>
-            {isLoading ? "Adding Header..." : "Header"}
-          </button>
-        </div>
-        <div>
-          <button className='bg-blue-300 p-4 items-center rounded-3xl' disabled={isLoading}>
-            <DrivePage />
-          </button>
-        </div>
+    <div className='flex items-start  space-x-5 h-auto'>
+      <div>
+        <button className='bg-transparent border font-mono text-sm p-4 rounded-3xl' onClick={handleAddPostClick} disabled={isLoading}>
+          {isLoading ? "Adding Header..." :
+            <div className="flex whitespace-nowrap">
+              <AiOutlineAppstoreAdd className="text-xl" />
+              <span className="mr-2" />
+              Add Header
+            </div>}
+        </button>
       </div>
+    </div>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import useDrivePicker from 'react-google-drive-picker'
 import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
 import { db, storage } from '../../firebase';
+import { FaGoogleDrive } from "react-icons/fa";
 import { getAuth } from 'firebase/auth';
 import "./DrivePage.css"
 const DrivePage = () => {
@@ -74,8 +75,17 @@ const DrivePage = () => {
     };
 
     return (
-        <div>
-            <button onClick={() => handleOpenPicker()}>Select File</button>
+        <div >
+            <button className='flex whitespace-nowrap bg-transparent border font-mono text-sm p-4 rounded-3xl' onClick={() => handleOpenPicker()}>
+                <div>
+                    <FaGoogleDrive />
+                </div>
+                <span className="mr-2" />
+
+                <div>
+                    Select File
+                </div>
+            </button>
         </div>
     );
 };
